@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    body {
+        margin: 0;
+        background-color: black;
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    #grandezza {
+        background-color: yellow;
+        height: 50px;
+        width:calc(0vw + 50px);
+        transition: all 0.2s ease-in-out;
+        color: transparent;
+        text-align: center;
+        vertical-align: middle;
+        margin:auto;
+        display: block;
+        filter: invert(0);
+    }
+    
+    .grande {
+        width: 100vw !important;
+        background-color: pink !important;
+        height: calc(100vh - 40px) !important;
+        color: black !important;
+    }
+    
+    button {
+        display:inline-block;
+        width: 120px;
+        height:40px;
+        border-radius: 99px;
+        border:2px solid white;
+        box-sizing: border-box;
+        background-color: black;
+        color: white;
+        margin: auto;
+    }
+    
+    .inv{
+        filter: invert(1) !important;
+    }
+</style>
+<title>Fiammetta</title>
+</head>
+<body>
+ <nobr><button onclick="grandezza()">fiammetta</button></nobr>
+ <button onclick="inverti()">hehe</button>
+ <div id="grandezza"></div>
+ <script>
+     function grandezza() {
+         document.getElementById("grandezza").classList.toggle("grande")
+     }
+     function inverti() {
+         document.getElementById("grandezza").classList.toggle("inv")
+     }
+     
+ </script>
+</body>
+</html>
