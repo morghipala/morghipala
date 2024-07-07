@@ -1,25 +1,62 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-    body {
-        margin: 0;
-        background-color: black;
-        overflow: hidden;
+  <meta charset="UTF-8">
+  <title>Invio colori a BLE</title>
+  <script src="https://unpkg.com/web-bluetooth@2/dist/web-bluetooth.min.js"></script>
+  <script>
+    // Funzione per richiedere l'accesso al dispositivo BLE
+    function requestDevice() {
+      navigator.bluetooth.requestDevice()
+        .then(device => {
+          console.log('Dispositivo BLE selezionato:', device.name);
+          connectDevice(device);
+        })
+        .catch(error => {
+          console.error('Errore durante la richiesta del dispositivo:', error);
+        });
     }
-    
-    iframe {
-        width: 100vw;
-        height: 100vh;
-        border: none;
+
+    // Funzione per connettersi al dispositivo BLE selezionato
+    function connectDevice(device) {
+      device.gatt.connect()
+        .then(gatt => {
+          console.log('Connesso al dispositivo BLE:', device.name);
+          sendColors(gatt);
+        })
+        .catch(error => {
+          console.error('Errore durante la connessione al dispositivo:', error);
+        });
     }
-</style>
-<title>Tesina Palazzini Morgan 3^A</title>
+
+    // Funzione per inviare i colori al dispositivo BLE
+    function sendColors(gatt) {
+      // Modifica i valori di 'colors' con i colori RGB desiderati
+      const colors = '255,0,0;0,255,0;0,0,255;128,128,128;255,255,0;0,255,255;255,0,255;128,0,128';
+
+      // Trova il servizio BLE appropriato
+      gatt.getPrimaryService('19b10000-e800-0000-251d-4fb18b3d3edd')
+        .then(service => {
+          // Trova la caratteristica BLE appropriata
+          service.getCharacteristic('19b10001-e800-0000-251d-4fb18b3d3edd')
+            .then(characteristic => {
+              // Invia i colori alla caratteristica BLE
+              characteristic.writeValue(new Uint8Array(colors.split(';').map(color => color.split(',').map(Number))));
+              console.log('Colori inviati al dispositivo BLE:', colors);
+            })
+            .catch(error => {
+              console.error('Errore durante l\'invio dei colori:', error);
+            });
+        })
+        .catch(error => {
+          console.error('Errore durante la ricerca del servizio BLE:', error);
+        });
+    }
+  </script>
 </head>
 <body>
- <iframe src="https://1drv.ms/p/c/47959f9dae3bf252/IQMkxDSI1Kj3QoVyYQW4B5s6AUQik4Jy0GUMyKoW3bWr4Pw?em=2&amp;wdAr=1.7777777777777777" frameborder="0">Si tratta di un <a target="_blank" href="https://office.com">Microsoft Office</a> incorporato presentazione, basato su <a target="_blank" href="https://office.com/webapps">Office</a>.</iframe>
- </script>
+  <h1>Invio colori a dispositivo BLE</h1>
+
+  <button onclick="requestDevice()">Seleziona dispositivo BLE</button>
 </body>
 </html>
