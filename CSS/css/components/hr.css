@@ -1,0 +1,4 @@
+hr {
+    border: 1px solid var(--md-sys-color-on-background);
+    border-radius: 999px;
+}

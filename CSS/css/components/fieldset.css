@@ -1,0 +1,8 @@
+fieldset {
+    border: 2px solid var(--md-sys-color-on-primary-container);
+    border-radius: 18px;
+}
+
+legend {
+    padding: 5px;
+}
