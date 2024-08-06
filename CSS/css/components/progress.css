@@ -41,6 +41,14 @@ progress::-webkit-progress-value {
     border-radius: 999px;
 }
 
+progress::-moz-progress-value {
+    transition: width 0.3s ease-in-out;
+    -moz-transition: width 0.3s ease-in-out;
+    -webkit-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+    -ms-transition: width 0.3s ease-in-out;
+}
+
 progress::-moz-progress-bar {
     background-color: var(--md-sys-color-primary);
     transition: width 0.3s ease-in-out;

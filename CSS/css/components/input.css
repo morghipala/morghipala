@@ -23,6 +23,16 @@ textarea {
   transition: border-color 0.2s ease;
 }
 
+.light input::placeholder,
+.light-high-contrast input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.dark input::placeholder,
+.dark-high-contrast input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
 input[type="text"]::selection,
 input[type="password"]::selection,
 input[type="email"]::selection,
@@ -71,19 +81,4 @@ input[type="number"] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: textfield;
-}
-
-input[type="search"] {
-  padding-left: 30px;
-}
-
-input[type="search"]::before {
-    display: block;
-    background-color: var(--md-sys-color-primary);
-    height: 50%;
-    width: 50%;
-    content: "";
-    position: absolute;
-    top: 25%;
-    left: 0;
 }
