@@ -1,0 +1,40 @@
+:root {
+    --body-margin: 6px;
+}
+
+*,
+body,
+body * {
+    font-family: Poppins;
+    color: var(--md-sys-color-on-background);
+    -webkit-tap-highlight-color: transparent !important;
+    overscroll-behavior: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    margin: var(--body-margin);
+    background-color: var(--md-sys-color-background);
+    overflow: overlay;
+}
+
+:disabled {
+    cursor: not-allowed;
+    filter: grayscale(1) brightness(0.5) !important;
+    touch-action: none;
+}
+
+.dark,
+.dark-high-contrast {
+    color-scheme: dark;
+}
+
+.light,
+.light-high-contrast {
+    color-scheme: light;
+}
+
+[icon] {
+    font-family: "Google Icons" !important;
+} 

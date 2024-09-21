@@ -1,0 +1,22 @@
+/*in production import only the files you need instead of using all.css*/
+
+@import url(main.css);
+@import url(fieldset.css);
+@import url(progress.css);
+@import url(checkbox.css);
+@import url(radio.css);
+@import url(range.css);
+@import url(scrollbar.css);
+@import url(button.css);
+@import url(color.css);
+@import url(input.css);
+@import url(hr.css);
+@import url(table.css);
+@import url(iframe.css);
+@import url(media.css);
+@import url(blockquote.css);
+@import url(section.css);
+@import url(details-and-more.css);
+@import url(select.css);
+@import url(footer.css);
+@import url(header.css);

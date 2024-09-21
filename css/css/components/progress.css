@@ -1,0 +1,104 @@
+progress {
+    height: 8px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 999px;
+    background-color: var(--md-sys-color-secondary-container);
+    border: none;
+}
+
+progress::before{
+    border-radius: 999px;
+    transition: width 0.3s ease-in-out;
+    -moz-transition: width 0.3s ease-in-out;
+    -webkit-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+    -ms-transition: width 0.3s ease-in-out;
+    background-color: var(--md-sys-color-primary);
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--md-sys-color-secondary-container);
+    border-radius: 999px;
+}
+
+progress::-moz-progress-bar {
+    background-color: var(--md-sys-color-secondary-container);
+    border-radius: 999px;
+}
+
+progress::-webkit-progress-value {
+    background-color: var(--md-sys-color-primary);
+    transition: width 0.3s ease-in-out;
+    -moz-transition: width 0.3s ease-in-out;
+    -webkit-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+    -ms-transition: width 0.3s ease-in-out;
+    border-radius: 999px;
+}
+
+progress::-moz-progress-value {
+    transition: width 0.3s ease-in-out;
+    -moz-transition: width 0.3s ease-in-out;
+    -webkit-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+    -ms-transition: width 0.3s ease-in-out;
+}
+
+progress::-moz-progress-bar {
+    background-color: var(--md-sys-color-primary);
+    transition: width 0.3s ease-in-out;
+    -moz-transition: width 0.3s ease-in-out;
+    -webkit-transition: width 0.3s ease-in-out;
+    -o-transition: width 0.3s ease-in-out;
+    -ms-transition: width 0.3s ease-in-out;
+    border-radius: 999px;
+}
+
+progress:indeterminate::before,
+progress:not([value])::before,
+progress[value="null"]::before,
+progress[value="undefined"]::before,
+progress[value=""]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: indeterminate 2s ease-in-out infinite;
+    -webkit-animation: indeterminate 2s ease-in-out infinite;
+    -moz-animation: indeterminate 2s ease-in-out infinite;
+    -o-animation: indeterminate 2s ease-in-out infinite;
+    -ms-animation: indeterminate 2s ease-in-out infinite;
+}
+
+progress:indeterminate::-moz-progress-bar,
+progress:not([value])::-moz-progress-bar,
+progress[value="null"]::-moz-progress-bar,
+progress[value="undefined"]::-moz-progress-bar,
+progress[value=""]::-moz-progress-bar {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: indeterminate 2s ease-in-out infinite;
+    -webkit-animation: indeterminate 2s ease-in-out infinite;
+}
+
+@keyframes indeterminate {
+    0% {
+        transform: translateX(-110%);
+        width: 2%;
+    }
+    100% {
+        transform: translateX(100%);
+        width: 100%;
+    }
+}

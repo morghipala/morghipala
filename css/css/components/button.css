@@ -1,0 +1,55 @@
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="file"]::file-selector-button {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border: 2px solid var(--md-sys-color-on-background); /* Colore del bordo */
+    border-radius: 999px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 5px;
+    cursor: pointer;
+    transition: filter 0.2s ease, border 0.2s ease;
+    font-family: Poppins;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="file"]::file-selector-button:hover {
+    border: 2px solid var(--md-sys-color-primary);
+    filter: brightness(120%);
+}
+
+button:active,
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="file"]::file-selector-button:active {
+    border: 2px solid var(--md-sys-color-primary);
+    filter: brightness(110%);
+}
+
+button[round],
+input[type="button"][round],
+input[type="submit"][round],
+input[type="reset"][round],
+input[type="file"][round] {
+    height: 36px;
+    width: 36px;
+    padding: 0;
+    line-height: 34px;
+}
+
+[outlined] {
+    background-color: transparent;
+    filter: none !important;
+}

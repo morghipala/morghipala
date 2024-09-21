@@ -1,0 +1,21 @@
+video:not(:fullscreen),
+image,
+img,
+audio {
+    box-sizing: border-box;
+    border: none;
+    border-radius: 18px;
+    overflow: hidden;
+    display: block;
+    border: 2px solid var(--md-sys-color-on-background); /* Colore del bordo */
+    padding: 0;
+     background-color: transparent;
+}
+
+audio {
+    border-radius: 999px;
+}
+
+video {
+    background-color: black !important;
+}

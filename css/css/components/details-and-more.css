@@ -1,0 +1,47 @@
+details {
+  padding: 10px;
+  border-radius: 18px;
+  border: 1px solid var(--md-sys-color-on-background);
+}
+
+/* Stile di base per il <summary> */
+details>summary {
+  list-style: none;
+  padding-left: 20px;
+  /* Spazio per la freccia */
+  position: relative;
+  /* Necessario per posizionare il pseudo-elemento */
+}
+
+/* Aggiungi la freccia con il pseudo-elemento ::before */
+details>summary::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: auto;
+  aspect-ratio: 1/1;
+  height: 50%;
+  /* Altezza della freccia */
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiIHdpZHRoPSIyNHB4IiBmaWxsPSIjRkZGRkZGIj48cGF0aCBkPSJNNTc5LTQ4MCAyODUtNzc0cS0xNS0xNS0xNC41LTM1LjVUMjg2LTg0NXExNS0xNSAzNS41LTE1dDM1LjUgMTVsMzA3IDMwOHExMiAxMiAxOCAyN3Q2IDMwcTAgMTUtNiAzMHQtMTggMjdMMzU2LTExNXEtMTUgMTUtMzUgMTQuNVQyODYtMTE2cS0xNS0xNS0xNS0zNS41dDE1LTM1LjVsMjkzLTI5M1oiLz48L3N2Zz4=") no-repeat center center;
+  background-size: 12px 12px;
+  /* Adatta la dimensione dell'immagine */
+  transition: transform 0.2s ease;
+  /* Transizione per la rotazione */
+}
+
+.light details>summary::before {
+  filter: invert(1);
+}
+
+/* Nascondi la freccia predefinita */
+details>summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Stile per quando il <details> è aperto */
+details[open]>summary::before {
+  transform: rotate(90deg);
+  /* Ruota la freccia quando il <details> è aperto */
+}
