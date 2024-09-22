@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mappa Personalizzata con Geolocalizzazione</title>
+    <!-- Include il CSS di MapLibre GL JS -->
+    <link href="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        /* Stile per la mappa per occupare tutto lo schermo */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Div per la mappa -->
+<div id="map"></div>
+
+<!-- Include la libreria MapLibre GL JS -->
+<script src="https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js"></script>
+
+<script>
+    // Inizializza la mappa con il nuovo ID mappa custom
+    var map = new maplibregl.Map({
+        container: 'map', // ID del contenitore della mappa
+        style: 'https://api.maptiler.com/maps/2a9ecfe7-3bfa-493f-b07c-fe331c92a551/style.json?key=zNbVkYJQlYEcj5XTSiIi', // URL del tuo stile personalizzato
+        center: [12.4964, 41.9028], // Coordinata centrale iniziale (in questo caso Roma, Italia)
+        zoom: 10 // Livello di zoom iniziale
+    });
+
+    // Aggiungi i controlli di navigazione alla mappa
+    map.addControl(new maplibregl.NavigationControl());
+
+    // Aggiungi il controllo della scala
+    map.addControl(new maplibregl.ScaleControl({
+        maxWidth: 80,
+        unit: 'metric'
+    }));
+
+    // Aggiungi il controllo della geolocalizzazione
+    var geolocateControl = new maplibregl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true, // Mantieni il tracciamento della posizione dell'utente
+        showAccuracyCircle: false // Nascondi il cerchio di accuratezza della posizione
+    });
+
+    // Aggiungi il controllo della geolocalizzazione alla mappa
+    map.addControl(geolocateControl);
+
+    // Attiva immediatamente la geolocalizzazione quando la mappa è pronta
+    map.on('load', function() {
+        geolocateControl.trigger(); // Avvia immediatamente la geolocalizzazione
+    });
+</script>
+
+</body>
+</html>
