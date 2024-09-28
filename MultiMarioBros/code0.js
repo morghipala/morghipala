@@ -106,7 +106,7 @@ gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDMarioOb
 gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDCoinObjects2Objects = Hashtable.newFrom({"Coin": gdjs.Untitled_32sceneCode.GDCoinObjects2});
 gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDItemBlockObjects1Objects = Hashtable.newFrom({"ItemBlock": gdjs.Untitled_32sceneCode.GDItemBlockObjects1});
 gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDMarioObjects1ObjectsGDgdjs_9546Untitled_959532sceneCode_9546GDLuigiObjects1Objects = Hashtable.newFrom({"Mario": gdjs.Untitled_32sceneCode.GDMarioObjects1, "Luigi": gdjs.Untitled_32sceneCode.GDLuigiObjects1});
-gdjs.Untitled_32sceneCode.asyncCallback10871244 = function (runtimeScene, asyncObjectsList) {
+gdjs.Untitled_32sceneCode.asyncCallback10912180 = function (runtimeScene, asyncObjectsList) {
 asyncObjectsList.restoreLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 gdjs.copyArray(asyncObjectsList.getObjects("ItemBlock"), gdjs.Untitled_32sceneCode.GDItemBlockObjects2);
 
@@ -128,7 +128,7 @@ gdjs.Untitled_32sceneCode.eventsList0 = function(runtimeScene) {
 const asyncObjectsList = new gdjs.LongLivedObjectsList();
 asyncObjectsList.backupLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 for (const obj of gdjs.Untitled_32sceneCode.GDItemBlockObjects1) asyncObjectsList.addObject("ItemBlock", obj);
-runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(0.15), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10871244(runtimeScene, asyncObjectsList)));
+runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(0.15), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10912180(runtimeScene, asyncObjectsList)));
 }
 }
 
@@ -217,6 +217,7 @@ if (isConditionTrue_0) {
 gdjs.Untitled_32sceneCode.GDCoinObjects2.length = 0;
 
 {gdjs.evtTools.object.createObjectOnScene((typeof eventsFunctionContext !== 'undefined' ? eventsFunctionContext : runtimeScene), gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDCoinObjects2Objects, (( gdjs.Untitled_32sceneCode.GDItemBlockObjects2.length === 0 ) ? 0 :gdjs.Untitled_32sceneCode.GDItemBlockObjects2[0].getPointX("")), ((gdjs.Untitled_32sceneCode.GDItemBlockObjects2.length === 0 ) ? gdjs.VariablesContainer.badVariablesContainer : gdjs.Untitled_32sceneCode.GDItemBlockObjects2[0].getVariables()).getFromIndex(1).getAsNumber() - 24, "");
+}{gdjs.evtTools.sound.playSound(runtimeScene, "smb_coin.wav", false, 100, 1);
 }{for(var i = 0, len = gdjs.Untitled_32sceneCode.GDItemBlockObjects2.length ;i < len;++i) {
     gdjs.Untitled_32sceneCode.GDItemBlockObjects2[i].variableRemoveAt(gdjs.Untitled_32sceneCode.GDItemBlockObjects2[i].getVariables().getFromIndex(2), 0);
 }
@@ -523,7 +524,7 @@ isConditionTrue_0 = false;
 isConditionTrue_0 = gdjs.evtTools.variable.getVariableBoolean(runtimeScene.getScene().getVariables().getFromIndex(12), true, false);
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10879820);
+{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10921260);
 }
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
@@ -651,7 +652,7 @@ for (var i = 0, k = 0, l = gdjs.Untitled_32sceneCode.GDMarioObjects2.length;i<l;
 gdjs.Untitled_32sceneCode.GDMarioObjects2.length = k;
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10885140);
+{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10926580);
 }
 }
 if (isConditionTrue_0) {
@@ -1058,7 +1059,7 @@ isConditionTrue_0 = false;
 isConditionTrue_0 = gdjs.evtTools.variable.getVariableBoolean(runtimeScene.getScene().getVariables().getFromIndex(13), true, false);
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10897188);
+{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10938628);
 }
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
@@ -1186,7 +1187,7 @@ for (var i = 0, k = 0, l = gdjs.Untitled_32sceneCode.GDLuigiObjects2.length;i<l;
 gdjs.Untitled_32sceneCode.GDLuigiObjects2.length = k;
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10902508);
+{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10943948);
 }
 }
 if (isConditionTrue_0) {
@@ -1516,7 +1517,7 @@ if (isConditionTrue_0) {
 gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDMarioObjects3ObjectsGDgdjs_9546Untitled_959532sceneCode_9546GDLuigiObjects3Objects = Hashtable.newFrom({"Mario": gdjs.Untitled_32sceneCode.GDMarioObjects3, "Luigi": gdjs.Untitled_32sceneCode.GDLuigiObjects3});
 gdjs.Untitled_32sceneCode.eventsList16 = function(runtimeScene) {
 
-};gdjs.Untitled_32sceneCode.asyncCallback9535644 = function (runtimeScene, asyncObjectsList) {
+};gdjs.Untitled_32sceneCode.asyncCallback10968348 = function (runtimeScene, asyncObjectsList) {
 asyncObjectsList.restoreLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 gdjs.copyArray(asyncObjectsList.getObjects("Coin"), gdjs.Untitled_32sceneCode.GDCoinObjects5);
 
@@ -1535,7 +1536,7 @@ gdjs.Untitled_32sceneCode.eventsList17 = function(runtimeScene) {
 const asyncObjectsList = new gdjs.LongLivedObjectsList();
 asyncObjectsList.backupLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 for (const obj of gdjs.Untitled_32sceneCode.GDCoinObjects3) asyncObjectsList.addObject("Coin", obj);
-runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(0.6), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback9535644(runtimeScene, asyncObjectsList)));
+runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(0.6), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10968348(runtimeScene, asyncObjectsList)));
 }
 }
 
@@ -1638,7 +1639,7 @@ if (isConditionTrue_0) {
 
 let isConditionTrue_0 = false;
 isConditionTrue_0 = false;
-isConditionTrue_0 = gdjs.evtTools.runtimeScene.sceneJustBegins(runtimeScene);
+isConditionTrue_0 = gdjs.multiplayer.hasLobbyGameJustStarted();
 if (isConditionTrue_0) {
 
 { //Subevents
@@ -1718,13 +1719,16 @@ for (var i = 0, k = 0, l = gdjs.Untitled_32sceneCode.GDCoinObjects3.length;i<l;+
 gdjs.Untitled_32sceneCode.GDCoinObjects3.length = k;
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(9948524);
+isConditionTrue_0 = gdjs.multiplayer.isLobbyGameRunning();
+if (isConditionTrue_0) {
+isConditionTrue_0 = false;
+{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10968236);
+}
 }
 }
 }
 if (isConditionTrue_0) {
-{gdjs.evtTools.sound.playSound(runtimeScene, "smb_coin.wav", false, 100, 1);
-}{runtimeScene.getScene().getVariables().getFromIndex(2).add(1);
+{runtimeScene.getScene().getVariables().getFromIndex(2).add(1);
 }
 { //Subevents: 
 gdjs.Untitled_32sceneCode.eventsList17(runtimeScene);} //Subevents end.
@@ -1777,7 +1781,7 @@ gdjs.copyArray(runtimeScene.getObjects("CoinDisplay"), gdjs.Untitled_32sceneCode
 
 };gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDMarioObjects2ObjectsGDgdjs_9546Untitled_959532sceneCode_9546GDLuigiObjects2Objects = Hashtable.newFrom({"Mario": gdjs.Untitled_32sceneCode.GDMarioObjects2, "Luigi": gdjs.Untitled_32sceneCode.GDLuigiObjects2});
 gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDToAObjects2Objects = Hashtable.newFrom({"ToA": gdjs.Untitled_32sceneCode.GDToAObjects2});
-gdjs.Untitled_32sceneCode.asyncCallback10930788 = function (runtimeScene, asyncObjectsList) {
+gdjs.Untitled_32sceneCode.asyncCallback10974492 = function (runtimeScene, asyncObjectsList) {
 asyncObjectsList.restoreLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 gdjs.copyArray(runtimeScene.getObjects("A"), gdjs.Untitled_32sceneCode.GDAObjects3);
 gdjs.copyArray(asyncObjectsList.getObjects("Luigi"), gdjs.Untitled_32sceneCode.GDLuigiObjects3);
@@ -1816,7 +1820,7 @@ const asyncObjectsList = new gdjs.LongLivedObjectsList();
 asyncObjectsList.backupLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 for (const obj of gdjs.Untitled_32sceneCode.GDLuigiObjects2) asyncObjectsList.addObject("Luigi", obj);
 for (const obj of gdjs.Untitled_32sceneCode.GDMarioObjects2) asyncObjectsList.addObject("Mario", obj);
-runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(1.2), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10930788(runtimeScene, asyncObjectsList)));
+runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(1.2), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10974492(runtimeScene, asyncObjectsList)));
 }
 }
 
@@ -1825,7 +1829,7 @@ runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(1.2)
 
 };gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDMarioObjects1ObjectsGDgdjs_9546Untitled_959532sceneCode_9546GDLuigiObjects1Objects = Hashtable.newFrom({"Mario": gdjs.Untitled_32sceneCode.GDMarioObjects1, "Luigi": gdjs.Untitled_32sceneCode.GDLuigiObjects1});
 gdjs.Untitled_32sceneCode.mapOfGDgdjs_9546Untitled_959532sceneCode_9546GDToBObjects1Objects = Hashtable.newFrom({"ToB": gdjs.Untitled_32sceneCode.GDToBObjects1});
-gdjs.Untitled_32sceneCode.asyncCallback10936644 = function (runtimeScene, asyncObjectsList) {
+gdjs.Untitled_32sceneCode.asyncCallback10981268 = function (runtimeScene, asyncObjectsList) {
 asyncObjectsList.restoreLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 gdjs.copyArray(asyncObjectsList.getObjects("Luigi"), gdjs.Untitled_32sceneCode.GDLuigiObjects3);
 
@@ -1851,14 +1855,14 @@ const asyncObjectsList = gdjs.LongLivedObjectsList.from(parentAsyncObjectsList);
 asyncObjectsList.backupLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 for (const obj of gdjs.Untitled_32sceneCode.GDLuigiObjects2) asyncObjectsList.addObject("Luigi", obj);
 for (const obj of gdjs.Untitled_32sceneCode.GDMarioObjects2) asyncObjectsList.addObject("Mario", obj);
-runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(0.8), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10936644(runtimeScene, asyncObjectsList)));
+runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(0.8), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10981268(runtimeScene, asyncObjectsList)));
 }
 }
 
 }
 
 
-};gdjs.Untitled_32sceneCode.asyncCallback10934892 = function (runtimeScene, asyncObjectsList) {
+};gdjs.Untitled_32sceneCode.asyncCallback10978668 = function (runtimeScene, asyncObjectsList) {
 asyncObjectsList.restoreLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 gdjs.copyArray(runtimeScene.getObjects("B"), gdjs.Untitled_32sceneCode.GDBObjects2);
 gdjs.copyArray(runtimeScene.getObjects("Background_1_1"), gdjs.Untitled_32sceneCode.GDBackground_95951_95951Objects2);
@@ -1901,7 +1905,7 @@ const asyncObjectsList = new gdjs.LongLivedObjectsList();
 asyncObjectsList.backupLocalVariablesContainers(gdjs.Untitled_32sceneCode.localVariables);
 for (const obj of gdjs.Untitled_32sceneCode.GDLuigiObjects1) asyncObjectsList.addObject("Luigi", obj);
 for (const obj of gdjs.Untitled_32sceneCode.GDMarioObjects1) asyncObjectsList.addObject("Mario", obj);
-runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(1.2), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10934892(runtimeScene, asyncObjectsList)));
+runtimeScene.getAsyncTasksManager().addTask(gdjs.evtTools.runtimeScene.wait(1.2), (runtimeScene) => (gdjs.Untitled_32sceneCode.asyncCallback10978668(runtimeScene, asyncObjectsList)));
 }
 }
 
@@ -1975,7 +1979,7 @@ for (var i = 0, k = 0, l = gdjs.Untitled_32sceneCode.GDLuigiObjects2.length;i<l;
 gdjs.Untitled_32sceneCode.GDLuigiObjects2.length = k;
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10349484);
+{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10973204);
 }
 }
 }
@@ -2077,7 +2081,7 @@ for (var i = 0, k = 0, l = gdjs.Untitled_32sceneCode.GDLuigiObjects1.length;i<l;
 gdjs.Untitled_32sceneCode.GDLuigiObjects1.length = k;
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
-{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10933612);
+{isConditionTrue_0 = runtimeScene.getOnceTriggers().triggerOnce(10977524);
 }
 }
 }
