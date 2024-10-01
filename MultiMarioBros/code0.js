@@ -247,14 +247,7 @@ for (var i = 0, k = 0, l = gdjs.Untitled_32sceneCode.GDItemBlockObjects1.length;
 gdjs.Untitled_32sceneCode.GDItemBlockObjects1.length = k;
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
-for (var i = 0, k = 0, l = gdjs.Untitled_32sceneCode.GDItemBlockObjects1.length;i<l;++i) {
-    if ( gdjs.Untitled_32sceneCode.GDItemBlockObjects1[i].getBehavior("MultiplayerObject").isObjectOwnedByCurrentPlayer() ) {
-        isConditionTrue_0 = true;
-        gdjs.Untitled_32sceneCode.GDItemBlockObjects1[k] = gdjs.Untitled_32sceneCode.GDItemBlockObjects1[i];
-        ++k;
-    }
-}
-gdjs.Untitled_32sceneCode.GDItemBlockObjects1.length = k;
+isConditionTrue_0 = gdjs.multiplayer.isCurrentPlayerHost();
 }
 }
 if (isConditionTrue_0) {
