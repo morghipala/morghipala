@@ -1,9 +1,13 @@
+:root {
+    --header-height: 60px;
+}
+
 header {
-    padding: 0;
+    padding: 0 10px;
     box-sizing: border-box;
     display: block;
     align-content: center;
-    position: sticky;
+    position: fixed;
     margin: calc(0px - calc(var(--body-margin) * 1));
     margin-bottom: 10px;
     top: 0;
@@ -17,4 +21,8 @@ header {
 
 header * {
     text-align: center;
+}
+
+body {
+    padding-top: var(--header-height);
 }
