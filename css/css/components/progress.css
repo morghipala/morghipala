@@ -63,7 +63,8 @@ progress:indeterminate::before,
 progress:not([value])::before,
 progress[value="null"]::before,
 progress[value="undefined"]::before,
-progress[value=""]::before {
+progress[value=""]::before,
+progress[value=-1]::before {
     content: '';
     position: absolute;
     top: 0;
@@ -81,7 +82,8 @@ progress:indeterminate::-moz-progress-bar,
 progress:not([value])::-moz-progress-bar,
 progress[value="null"]::-moz-progress-bar,
 progress[value="undefined"]::-moz-progress-bar,
-progress[value=""]::-moz-progress-bar {
+progress[value=""]::-moz-progress-bar,
+progress[value=-1]::-moz-progress-bar {
     content: '';
     position: absolute;
     top: 0;
