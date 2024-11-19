@@ -11,7 +11,7 @@
     <script src="ToneVideo.js"></script>
 </head>
 
-<body class="dark">
+<body class="dark" onload="ToneVideo.onLoad()">
 
     <!-- Intestazione (Header) -->
     <header>
@@ -112,13 +112,13 @@
         <!-- Sezione video -->
         <section>
             <h2>Video di Esempio</h2>
-            <div class="videoContainer" style="width: 500px; aspect-ratio: 16/9;" >
+            <div class="videoContainer" style="width: 500px; aspect-ratio: 16/9;">
                 <video controls id="videoPlayer">
                     <source src="miku.mp4" type="video/mp4">
                     Il tuo browser non supporta il tag video.
                 </video>
             </div>
-            <div class="videoContainer" style="width: 500px; aspect-ratio: 16/9;" >
+            <div class="videoContainer" style="width: 500px; aspect-ratio: 16/9;">
                 <video controls id="videoPlayer2">
                     <source src="miku.mp4" type="video/mp4">
                     Il tuo browser non supporta il tag video.
@@ -354,6 +354,7 @@
 
         ToneVideo.init(videoPlayer);
         ToneVideo.init(videoPlayer2);
+
 
     </script>
 

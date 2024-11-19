@@ -616,8 +616,26 @@ const ToneVideo = (() => {
         // Se nessun video è trovato, restituisci null
         return null;
     }
+    
 
-    const api = { init, setEpisodeDetails, addButton, removeButton, setOpening, setCredits, setSubtitleLanguage, showSubtitles, hideSubtitles, formatTime };
+    const onLoad = () => {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+
+    function onBackKeyDown() {
+        const containers = document.querySelectorAll('.tone-video-container');
+        containers.forEach((container) => {
+            container.classList.remove('fullscreen');
+        });
+    }
+
+
+    const api = { init, setEpisodeDetails, addButton, removeButton, setOpening, setCredits, setSubtitleLanguage, showSubtitles, hideSubtitles, formatTime, onLoad};
     return api;
 
 
