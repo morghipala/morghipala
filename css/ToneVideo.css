@@ -1,0 +1,299 @@
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
+.progress-bar::after {
+    margin-right: 8px !important;
+    margin-left: 8px !important;
+    content: var(--content-after) !important;
+    position: relative !important;
+    display: inline-block !important;
+    z-index: 1 !important;
+    width: 60px !important;
+    text-shadow: 2px 1px 3px #000000;
+}
+
+.videoContainer {
+    position: relative;
+}
+
+.progress-bar {
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+.progress-bar::-webkit-slider-runnable-track {
+    background-color: white !important;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    background-color: black !important;
+}
+
+.progress-bar {
+    background-color: transparent !important;
+}
+
+.progress-bar:before {
+    margin-right: 8px !important;
+    margin-left: 8px !important;
+    content: var(--content-before) !important;
+    position: relative !important;
+    width: 60px !important;
+    text-shadow: 2px 1px 3px #000000;
+}
+
+.ToneVideo video {
+    border: none !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.ToneVideo .material-icons {
+    font-family: 'Material Icons' !important;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    /* Imposta la dimensione dell'icona */
+    display: inline-block;
+    line-height: 1;
+    /* Allinea l'icona verticalmente */
+    text-transform: none;
+    /* Non trasformare il testo */
+    text-rendering: optimizeLegibility;
+    /* Ottimizzazione della leggibilità */
+    -webkit-font-smoothing: antialiased;
+    /* Liscia il font su Webkit */
+}
+
+.tone-video-container {
+    position: relative;
+    width: 100% !important;
+    height: 100%;
+    overflow: hidden;
+}
+
+.tone-video-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(10px) brightness(80%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.play-btn {
+    font-size: 32px !important;
+    line-height: 16px !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    position: absolute;
+    bottom: 50%;
+    transform: translateY(50%);
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    border: none !important;
+    cursor: pointer;
+    transition: bottom 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    backdrop-filter: blur(4px);
+    opacity: 1;
+}
+
+.skip-backward-btn {
+    line-height: 0 !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(calc(-50% - 100px), -10%);
+    backdrop-filter: blur(10px) brightness(50%);
+    background-color: transparent;
+    border: none !important;
+    cursor: pointer;
+    transition: bottom 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.skip-forward-btn {
+    line-height: 0 !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(calc(-50% + 100px), -10%);
+    background-color: transparent;
+    backdrop-filter: blur(10px) brightness(50%);
+    border: none !important;
+    cursor: pointer;
+    transition: bottom 0.3s ease-in-out, visibility 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.play-btn i {
+    font-size: 30px !important;
+    line-height: 30px !important;
+}
+
+.skip-backward-btn i {
+    font-size: 30px !important;
+}
+
+.skip-forward-btn i {
+    font-size: 30px !important;
+}
+
+button * {
+    text-shadow: 2px 1px 3px #000000 !important;
+}
+
+.fullscreen-btn,
+.subtitle-btn,
+#Next {
+    background-color: transparent !important;
+    font-size: 26px !important;
+    line-height: 12px !important;
+    padding: 10px !important;
+    margin: 3px !important;
+    border: none !important;
+    cursor: pointer;
+}
+
+.subtitle-popup {
+    width: 50%;
+    height: 95px;
+    min-width: 200px;
+    max-width: calc(100% - 100px) !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(10px) brightness(50%);
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 18px;
+    text-shadow: 2px 1px 3px #000000;
+}
+
+.subtitle-popup select {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-width: 1px;
+    text-shadow: 2px 1px 3px #000000;
+    width: 95%;
+}
+
+.subtitle-popup input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 30px;
+    height: 20px;
+    border: 2px solid var(--md-sys-color-on-background);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    position: relative;
+}
+
+.subtitle-popup input[type="checkbox"]::before {
+    background-color: white;
+    width: 16px;
+    height: 16px;
+    transform: scale(0.8) !important;
+    border-radius: 9999px;
+    transition: background-color 0.3s ease, translate 0.3s ease;
+    translate: 0 0;
+}
+
+.subtitle-popup input[type="checkbox"]:checked::before {
+    translate: 60% 0;
+    background-color: var(--md-sys-color-primary);
+}
+
+.close-btn {
+    position: absolute;
+    background-color: transparent;
+    border: none !important;
+    cursor: pointer;
+    top: -5px;
+    right: 5px;
+    padding: 2px;
+    text-shadow: 2px 1px 3px #000000;
+}
+
+.skip-btn,
+.credits-btn {
+    font-size: 14px !important;
+    line-height: 14px !important;
+    padding: 12px !important;
+    margin: 0 !important;
+    position: absolute;
+    bottom: 75px;
+    right: 10px;
+    background-color: transparent;
+    backdrop-filter: blur(10px) brightness(50%) !important;
+    border: none !important;
+    cursor: pointer;
+}
+
+.episode-details {
+    padding: 10px 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(10px) brightness(80%);
+    width: 100%;
+    transition: transform 0.3s ease-in-out, height 0.3s ease-in-out;
+    text-shadow: 2px 1px 3px #000000;
+    overflow: hidden;
+}
+
+.ToneHidden .episode-details {
+    transform: translateY(-100%);
+}
+
+.ToneHidden .tone-video-controls {
+    transform: translateY(100%);
+}
+
+.ToneHidden .play-btn,
+.ToneHidden .skip-backward-btn,
+.ToneHidden .skip-forward-btn {
+    opacity: 0;
+}
+
+.ToneHidden {
+    cursor: none !important;
+    touch-action: none;
+}
+
+* {
+    outline: none !important;
+}
+
+#onEdit {
+    position: absolute;
+    top: 100px;
+    left: 5%;
+    width: 90%;
+    padding: 10px;
+    border-radius: 999px;
+    text-align: center;
+    color: white;
+    font-size: large;
+    z-index: 99;
+    display: none;
+    backdrop-filter: blur(10px) brightness(50%);
+    text-shadow: 2px 1px 3px #000000;
+    box-sizing: border-box;
+}
+
+.tone-video-container:not(.fullscreen) {
+    border-radius: 18px;
+    border: 2px solid var(--md-sys-color-on-background) !important;
+    box-sizing: border-box;
+    overflow: hidden;
+}

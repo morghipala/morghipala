@@ -1,5 +1,5 @@
 :root {
-    --body-margin: 6px;
+    --main-margin: 8px;
 }
 
 *,
@@ -14,7 +14,7 @@ body * {
 body {
     margin: 0;
     padding: 0;
-    margin: var(--body-margin);
+    margin: 0;
     background-color: var(--md-sys-color-background);
     overflow: overlay;
 }
@@ -38,3 +38,7 @@ body {
 [icon] {
     font-family: "Google Icons" !important;
 } 
+
+main {
+    margin: var(--main-margin);
+}

@@ -1,19 +1,14 @@
-:root {
-    --header-height: 60px;
-}
-
 header {
     padding: 0 10px;
     box-sizing: border-box;
     display: block;
     align-content: center;
-    position: fixed;
-    margin: calc(0px - calc(var(--body-margin) * 1));
+    position: sticky;
     margin-bottom: 10px;
     top: 0;
     left: 0;
     background-color: var(--md-sys-color-surface-container);
-    width: calc(100% + calc(var(--body-margin) * 2));
+    width: 100%;
     border-bottom: 1px solid grey;
     text-align: center;
     z-index: 999999;
@@ -21,8 +16,4 @@ header {
 
 header * {
     text-align: center;
-}
-
-body {
-    padding-top: var(--header-height);
 }

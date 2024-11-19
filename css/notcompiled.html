@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Esempio di Pagina Completa</title>
     <!-- Collegamento al file CSS esterno -->
     <link rel="stylesheet" href="css/import-all.css">
+    <link rel="stylesheet" href="ToneVideo.css">
+    <script src="ToneVideo.js"></script>
 </head>
+
 <body class="dark">
 
     <!-- Intestazione (Header) -->
@@ -23,7 +27,8 @@
         <!-- Articolo con intestazioni, paragrafi e immagine -->
         <article>
             <h2 id="home">Introduzione</h2>
-            <p>Questo è un paragrafo di esempio che contiene <strong>testo in grassetto</strong>, <em>testo in corsivo</em>, e <u>testo sottolineato</u>.</p>
+            <p>Questo è un paragrafo di esempio che contiene <strong>testo in grassetto</strong>, <em>testo in
+                    corsivo</em>, e <u>testo sottolineato</u>.</p>
             <p>Puoi anche includere un <a href="https://www.example.com">collegamento</a> o un'immagine come questa:</p>
             <img src="https://via.placeholder.com/400x200" alt="Immagine di esempio">
         </article>
@@ -107,10 +112,18 @@
         <!-- Sezione video -->
         <section>
             <h2>Video di Esempio</h2>
-            <video width="320" height="240" controls>
-                <source src="miku.mp4" type="video/mp4">
-                Il tuo browser non supporta il tag video.
-            </video>
+            <div class="videoContainer" style="width: 500px; aspect-ratio: 16/9;" >
+                <video controls id="videoPlayer">
+                    <source src="miku.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+            <div class="videoContainer" style="width: 500px; aspect-ratio: 16/9;" >
+                <video controls id="videoPlayer2">
+                    <source src="miku.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
         </section>
 
         <!-- Sezione audio -->
@@ -145,19 +158,19 @@
             <h2>Sezione con Altri Elementi</h2>
             <!-- Campo di ricerca -->
             <input type="search" placeholder="Cerca..."><br><br>
-            
+
             <!-- Campo di numero -->
             <label for="quantity">Quantità:</label>
             <input type="number" id="quantity" name="quantity" min="1" max="100"><br><br>
-            
+
             <!-- Selettore colore -->
             <label for="favcolor">Scegli un colore:</label>
             <input type="color" id="favcolor" name="favcolor"><br><br>
-            
+
             <!-- Data -->
             <label for="birthday">Data di nascita:</label>
             <input type="date" id="birthday" name="birthday"><br><br>
-            
+
             <!-- Seleziona file -->
             <label for="myfile">Seleziona un file:</label>
             <input type="file" id="myfile" name="myfile"><br><br>
@@ -166,7 +179,7 @@
             <label for="volume">Volume:</label>
             <input type="range" id="volume" name="volume" min="0" max="100"><br><br>
             <input type="range" min="50" max="300" value="75" step="0.1"><br><br>
-            
+
             <!-- Selezione multipla -->
             <label for="cars">Scegli una macchina:</label>
             <select id="cars" name="cars">
@@ -185,7 +198,7 @@
             <label><input type="radio" name="gender" value="male"> Maschio</label><br>
             <label><input type="radio" name="gender" value="female"> Femmina</label><br>
             <label><input type="radio" name="gender" value="other"> Altro</label><br><br>
-            
+
             <!-- Output -->
             <output name="result" for="quantity volume">50</output><br><br>
 
@@ -196,7 +209,9 @@
             </details><br>
 
             <!-- Mappa -->
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509071!2d144.95373631575916!3d-37.81720974201292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577db978dd8f34d!2sFederation%20Square!5e0!3m2!1sit!2sit!4v1622823986492!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509071!2d144.95373631575916!3d-37.81720974201292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577db978dd8f34d!2sFederation%20Square!5e0!3m2!1sit!2sit!4v1622823986492!5m2!1sit!2sit"
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </section>
 
         <!-- Sezione di Testo e Citazioni -->
@@ -204,7 +219,7 @@
             <h2>Testo e Citazioni</h2>
             <p>Testo normale con <abbr title="Hypertext Markup Language">HTML</abbr> e <cite>citazioni</cite>.</p>
             <q>Questa è una citazione in linea.</q><br><br>
-            
+
             <!-- Dettagli espandibili -->
             <details>
                 <summary>Leggi di più</summary>
@@ -285,54 +300,63 @@
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 La Mia Azienda. Tutti i diritti riservati.</p>
-        <button id="theme" onclick="theme()" icon outlined round style="margin:0; position: absolute; right: 10px; top: 50%; -ms-transform: translateY(-55%); transform: translateY(-55%); box-sizing: border-box;">a</button>
+        <button id="theme" onclick="theme()" icon outlined round
+            style="margin:0; position: absolute; right: 10px; top: 50%; -ms-transform: translateY(-55%); transform: translateY(-55%); box-sizing: border-box;">a</button>
     </footer>
 
     <!-- Script JavaScript -->
     <script>
-      const elem = document.getElementById("change");
-      const elem2 = document.getElementById("change2");
-      updateProgress(elem);
-      updateProgress2(elem2);
+        const elem = document.getElementById("change");
+        const elem2 = document.getElementById("change2");
+        updateProgress(elem);
+        updateProgress2(elem2);
 
-      async function updateProgress(elem) {
-        while (true) {
-          for (let i = 0; i < 10; i++) {
-            elem.value = elem.value + 10;
-            await sleep(500);
-          }
-          for (let i = 0; i < 10; i++) {
-            elem.value = elem.value - 10;
-            await sleep(500);
-          }
+        async function updateProgress(elem) {
+            while (true) {
+                for (let i = 0; i < 10; i++) {
+                    elem.value = elem.value + 10;
+                    await sleep(500);
+                }
+                for (let i = 0; i < 10; i++) {
+                    elem.value = elem.value - 10;
+                    await sleep(500);
+                }
+            }
         }
-      }
 
-      async function updateProgress2(elem) {
-        while (true) {
-          elem.value = 100;
-          await sleep(500);
-          
-          elem.value = 0;
-          await sleep(500);
+        async function updateProgress2(elem) {
+            while (true) {
+                elem.value = 100;
+                await sleep(500);
+
+                elem.value = 0;
+                await sleep(500);
+            }
         }
-      }
 
-      function sleep(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-      }
-
-      function theme() {
-        const body = document.querySelector("body");
-        if (body.classList.contains("dark")) {
-            body.classList.remove("dark");
-            body.classList.add("light")
-        } else {
-            try {body.classList.remove("light");} catch (error) {};
-            body.classList.add("dark")
+        function sleep(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms));
         }
-      }
+
+        function theme() {
+            const body = document.querySelector("body");
+            if (body.classList.contains("dark")) {
+                body.classList.remove("dark");
+                body.classList.add("light")
+            } else {
+                try { body.classList.remove("light"); } catch (error) { };
+                body.classList.add("dark")
+            }
+        }
+
+        const videoPlayer = document.getElementById("videoPlayer");
+        const videoPlayer2 = document.getElementById("videoPlayer2");
+
+        ToneVideo.init(videoPlayer);
+        ToneVideo.init(videoPlayer2);
+
     </script>
 
 </body>
+
 </html>
