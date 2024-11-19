@@ -1,18 +1,30 @@
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 .progress-bar::after {
-    margin-right: 8px !important;
-    margin-left: 8px !important;
-    content: var(--content-after) !important;
-    position: relative !important;
-    display: inline-block !important;
-    z-index: 1 !important;
-    width: 60px !important;
-    text-shadow: 2px 1px 3px #000000;
+    display: none !important;
+}
+
+.progress-bar::-moz-range-track {
+    background-color: white !important;
+}
+
+.progress-bar::-moz-range-thumb {
+    background-color: black !important;
 }
 
 .videoContainer {
     position: relative;
+}
+
+.before,
+.after {
+    margin: 0 12px;
+    width: 120px;
+    text-shadow: 2px 1px 3px #000000;
+}
+
+.before {
+    text-align: right;
 }
 
 .progress-bar {
@@ -33,12 +45,7 @@
 }
 
 .progress-bar:before {
-    margin-right: 8px !important;
-    margin-left: 8px !important;
-    content: var(--content-before) !important;
-    position: relative !important;
-    width: 60px !important;
-    text-shadow: 2px 1px 3px #000000;
+    display: none !important;
 }
 
 .ToneVideo video {
