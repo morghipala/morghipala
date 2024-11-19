@@ -11,7 +11,7 @@
     <script src="ToneVideo.js"></script>
 </head>
 
-<body class="dark" onload="ToneVideo.onLoad()">
+<body class="dark" onload="ToneVideo.onLoad()" style="overflow-x: hidden;">
 
     <!-- Intestazione (Header) -->
     <header>
@@ -21,7 +21,7 @@
     <!-- Sezione principale -->
     <main>
 
-        <iframe width="500" height="300" src="test.html" style="resize: both;"></iframe>
+        <iframe width="500" height="300" src="test.html" style="max-width: calc(100svw - calc(var(--main-margin) * 5));resize: both;"></iframe>
 
         <div id="google-map" class="google-map"></div>
         <!-- Articolo con intestazioni, paragrafi e immagine -->
@@ -30,7 +30,7 @@
             <p>Questo è un paragrafo di esempio che contiene <strong>testo in grassetto</strong>, <em>testo in
                     corsivo</em>, e <u>testo sottolineato</u>.</p>
             <p>Puoi anche includere un <a href="https://www.example.com">collegamento</a> o un'immagine come questa:</p>
-            <img src="https://via.placeholder.com/400x200" alt="Immagine di esempio">
+            <img src="https://via.placeholder.com/400x200" alt="Immagine di esempio" style="max-width: calc(100svw - calc(var(--main-margin) * 5));">
         </article>
 
         <!-- Lista non ordinata -->
@@ -56,7 +56,7 @@
         <!-- Tabella -->
         <section>
             <h2 id="services">Servizi Offerti</h2>
-            <table border="1">
+            <table border="1" style="max-width: calc(100svw - calc(var(--main-margin) * 5)) !important;">
                 <thead>
                     <tr>
                         <th>Servizio</th>
@@ -112,13 +112,13 @@
         <!-- Sezione video -->
         <section>
             <h2>Video di Esempio</h2>
-            <div class="videoContainer" style="width: 500px; aspect-ratio: 16/9;">
+            <div class="videoContainer" style="width: 500px; max-width: calc(100svw - calc(var(--main-margin) * 5)); aspect-ratio: 16/9;">
                 <video controls id="videoPlayer">
                     <source src="miku.mp4" type="video/mp4">
                     Il tuo browser non supporta il tag video.
                 </video>
             </div>
-            <div class="videoContainer" style="width: 500px; aspect-ratio: 16/9;">
+            <div class="videoContainer" style="width: 500px; max-width: calc(100svw - calc(var(--main-margin) * 5)); aspect-ratio: 16/9;">
                 <video controls id="videoPlayer2">
                     <source src="miku.mp4" type="video/mp4">
                     Il tuo browser non supporta il tag video.
@@ -129,7 +129,7 @@
         <!-- Sezione audio -->
         <section>
             <h2>Audio di Esempio</h2>
-            <audio controls>
+            <audio controls style="max-width: calc(100svw - calc(var(--main-margin) * 5));">
                 <source src="https://www.example.com/audio.mp3" type="audio/mp3">
                 Il tuo browser non supporta il tag audio.
             </audio>
@@ -209,7 +209,7 @@
             </details><br>
 
             <!-- Mappa -->
-            <iframe
+            <iframe style="max-width: calc(100svw - calc(var(--main-margin) * 5));"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509071!2d144.95373631575916!3d-37.81720974201292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577db978dd8f34d!2sFederation%20Square!5e0!3m2!1sit!2sit!4v1622823986492!5m2!1sit!2sit"
                 width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </section>
@@ -242,7 +242,7 @@
         <!-- Sezione per l'iframe -->
         <section>
             <h2>Incorporamento iFrame</h2>
-            <iframe src="https://www.example.com" width="600" height="400" style="border:none;"></iframe>
+            <iframe src="https://www.example.com" style="max-width: calc(100svw - calc(var(--main-margin) * 5));" width="600" height="400" style="border:none;"></iframe>
         </section>
 
         <!-- Sezione per le tabelle avanzate -->
