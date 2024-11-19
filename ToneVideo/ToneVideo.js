@@ -36,13 +36,19 @@ const ToneVideo = (() => {
         playButton.classList.add('play-btn');
 
         const progressBar = document.createElement('input');
-        progressBar.style.setProperty('--content-before', `"00:00"`);
-        progressBar.style.setProperty('--content-after', `"00:00"`);
         progressBar.type = 'range';
         progressBar.classList.add('progress-bar');
         progressBar.value = 0;
         progressBar.min = 0;
         progressBar.max = videoElement.duration || 0;
+
+        const before = document.createElement('div');
+        before.classList.add('before');
+        before.innerHTML = '00:00';
+
+        const after = document.createElement('div');
+        after.classList.add('after');
+        after.innerHTML = '00:00';
 
         const muteButton = document.createElement('button');
         muteButton.innerHTML = '<i class="material-icons">volume_off</i>';
@@ -73,7 +79,9 @@ const ToneVideo = (() => {
         subtitleButton.classList.add('subtitle-btn');
         subtitleButton.addEventListener('click', () => openSubtitlePopup(videoElement));
 
+        controlsWrapper.appendChild(before);
         controlsWrapper.appendChild(progressBar);
+        controlsWrapper.appendChild(after);
         controlsWrapper.appendChild(subtitleButton);
         controlsWrapper.appendChild(fullscreenButton);
         controlsContainer.appendChild(controlsWrapper);
@@ -83,6 +91,7 @@ const ToneVideo = (() => {
 
         const videoContainer = document.createElement('div');
         videoContainer.classList.add('tone-video-container');
+        videoContainer.classList.add('ToneHidden');
         videoContainer.classList.add('ToneVideo');
 
         const videoParent = videoElement.parentNode;
@@ -109,35 +118,40 @@ const ToneVideo = (() => {
             videoContainer.classList.add('ToneHidden');
         });
 
-        resetInactivityTimer();
-
         playButton.addEventListener('click', () => togglePlay(videoElement, playButton));
         progressBar.addEventListener('input', (e) => updateProgress(videoElement, e.target.value));
         muteButton.addEventListener('click', () => toggleMute(videoElement, muteButton));
         skipForwardButton.addEventListener('click', () => skipVideo(videoElement, 10));
         skipBackwardButton.addEventListener('click', () => skipVideo(videoElement, -10));
 
-        const updateTimeVariables = () => {
+        const updateTimeVariables = (videoElement) => {
             const currentTime = videoElement.currentTime;
             const duration = videoElement.duration || 0;
-
+            const container = findNearestVideo(videoElement);
+            const before = container.querySelector('.before');
+            const after = container.querySelector('.after');
+            const progressBar = container.querySelector('.progress-bar');
             const formattedCurrentTime = formatTime(currentTime);
             const formattedDuration = duration ? formatTime(duration) : '00:00';
 
-            progressBar.style.setProperty('--content-before', `"${formattedCurrentTime}"`);
-            progressBar.style.setProperty('--content-after', `"${formattedDuration}"`);
-        };
-
-        videoElement.addEventListener('loadedmetadata', updateTimeVariables);
-
-        videoElement.ontimeupdate = (event) => {
+            
             progressBar.max = videoElement.duration;
             progressBar.value = videoElement.currentTime;
-            updateTimeVariables();
+
+            before.innerHTML = formattedCurrentTime;
+            after.innerHTML = formattedDuration;
+        };
+
+        videoElement.addEventListener('loadedmetadata', function (e) {
+            updateTimeVariables(e.target);
+        });
+
+        videoElement.ontimeupdate = (event) => {
+            updateTimeVariables(videoElement);
             checkForSegments(videoElement.currentTime);
         };
 
-        updateTimeVariables();
+        updateTimeVariables(videoElement);
 
         function updateButton() {
             playButton.innerHTML = videoElement.paused ? '<i class="material-icons">play_arrow</i>' : '<i class="material-icons">pause</i>';
@@ -186,6 +200,13 @@ const ToneVideo = (() => {
     const toggleMute = (video, button) => {
         video.muted = !video.muted;
         button.innerHTML = video.muted ? '<i class="material-icons">volume_mute</i>' : '<i class="material-icons">volume_up</i>';
+    };
+
+    document.onfullscreenchange = (event) => {
+        const containers = document.querySelectorAll('.tone-video-container');
+        containers.forEach((container) => {
+            container.classList.toggle('fullscreen', document.fullscreenElement === container);
+        });
     };
 
     const init = (elements) => {
@@ -595,8 +616,26 @@ const ToneVideo = (() => {
         // Se nessun video è trovato, restituisci null
         return null;
     }
+    
 
-    const api = { init, setEpisodeDetails, addButton, removeButton, setOpening, setCredits, setSubtitleLanguage, showSubtitles, hideSubtitles, formatTime };
+    const onLoad = () => {
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+
+    function onBackKeyDown() {
+        const containers = document.querySelectorAll('.tone-video-container');
+        containers.forEach((container) => {
+            container.classList.remove('fullscreen');
+        });
+    }
+
+
+    const api = { init, setEpisodeDetails, addButton, removeButton, setOpening, setCredits, setSubtitleLanguage, showSubtitles, hideSubtitles, formatTime, onLoad};
     return api;
 
 
