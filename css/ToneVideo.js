@@ -202,7 +202,7 @@ const ToneVideo = (() => {
         button.innerHTML = video.muted ? '<i class="material-icons">volume_mute</i>' : '<i class="material-icons">volume_up</i>';
     };
 
-    onfullscreenchange = (event) => {
+    document.onfullscreenchange = (event) => {
         const containers = document.querySelectorAll('.tone-video-container');
         containers.forEach((container) => {
             container.classList.toggle('fullscreen', document.fullscreenElement === container);
