@@ -162,8 +162,7 @@ const ToneVideo = (() => {
     };
 
     const toggleFullscreen = (videoElement) => {
-        videoElement.classList.toggle('fullscreen');
-        if (videoElement.classList.contains('fullscreen')) {
+        if (!document.fullscreenElement) {
             videoElement.requestFullscreen().catch(err => {
                 console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
             });
@@ -431,21 +430,22 @@ const ToneVideo = (() => {
     };
 
     document.addEventListener('keydown', (event) => {
-        const videoElement = document.querySelector('.tone-video-container video');
-        if (!videoElement) return;
+        const videoContainers = document.querySelector('.tone-video-container:hover video');
+        if (!videoContainers) return;
+        let video = videoContainers;
 
         switch (event.code) {
             case 'Space':
                 event.preventDefault();
-                togglePlay(videoElement, document.querySelector('.pause-btn'));
+                togglePlay(video, document.querySelector('.pause-btn'));
                 break;
             case 'ArrowRight':
                 event.preventDefault();
-                skipVideo(videoElement, 10);
+                skipVideo(video, 10);
                 break;
             case 'ArrowLeft':
                 event.preventDefault();
-                skipVideo(videoElement, -10);
+                skipVideo(video, -10);
                 break;
             default:
                 break;
