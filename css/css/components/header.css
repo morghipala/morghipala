@@ -5,7 +5,7 @@ header {
     align-content: center;
     position: sticky;
     margin-bottom: 10px;
-    top: 0;
+    top: -1px;
     left: 0;
     background-color: var(--md-sys-color-surface-container);
     width: 100%;

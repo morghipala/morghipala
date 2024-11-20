@@ -1,75 +1,75 @@
 import os
-import re
 import base64
 
-# Percorso della cartella CSS
-css_folder = 'css'
-output_file = 'ToneCSS.css'
+# Funzione per convertire un file in base64
+def file_to_base64(file_path):
+    with open(file_path, "rb") as file:
+        file_content = file.read()
+    return base64.b64encode(file_content).decode('utf-8')
 
-def encode_file_base64(file_path):
-    """Legge un file e lo codifica in base64."""
-    with open(file_path, 'rb') as f:
-        return base64.b64encode(f.read()).decode('utf-8')
-
-def replace_references_with_base64(content, css_dir):
-    """Sostituisce ogni riferimento a file (non URL) con il loro contenuto codificato in Base64."""
-    # Espressione regolare per trovare riferimenti a file (url('file.ext') o url("file.ext"))
-    regex = re.compile(r'url\((["\']?)(?!https?://)([^"\')]+)\1\)')
-    
-    def replace_match(match):
-        file_ref = match.group(2)
-        file_path = os.path.join(css_dir, file_ref)
-        if os.path.isfile(file_path):
-            file_ext = os.path.splitext(file_ref)[1][1:].lower()
-            base64_data = encode_file_base64(file_path)
-            return f"url(data:image/{file_ext};base64,{base64_data})"
-        return match.group(0)  # Se non è un file, lascia invariato
-
-    return regex.sub(replace_match, content)
-
-def collect_css_files(folder):
-    """Raccoglie tutti i file CSS nella cartella, processando per primi quelli nella cartella fonts."""
-    css_files = []
-    fonts_files = []
-
-    for root, dirs, files in os.walk(folder):
-        for file in files:
-            if file.endswith('.css') and not file.startswith('import-'):
-                full_path = os.path.join(root, file)
-                if 'fonts' in full_path:
-                    fonts_files.append(full_path)
-                else:
-                    css_files.append(full_path)
-
-    # I file della cartella fonts vengono inseriti per primi
-    return fonts_files + css_files
-
-def process_css_files(files):
-    """Processa i file CSS, sostituendo i riferimenti con base64 e unendoli in un file unico."""
+# Funzione per unire i file CSS e sostituire le risorse con base64
+def combine_and_convert_css(directories):
     combined_css = ""
+    
+    # Itera attraverso le directory fornite
+    for directory in directories:
+        for root, _, files in os.walk(directory):
+            for file in files:
+                # Ignora i file che iniziano con "import-"
+                if file.startswith("import-"):
+                    continue
 
-    for css_file in files:
-        with open(css_file, 'r', encoding='utf-8') as f:
-            content = f.read()
-            css_dir = os.path.dirname(css_file)
-            # Sostituisce riferimenti ai file con base64
-            content_with_base64 = replace_references_with_base64(content, css_dir)
-            combined_css += content_with_base64 + '\n'
-
+                if file.endswith('.css'):
+                    file_path = os.path.join(root, file)
+                    print(f"Elaborando: {file_path}")
+                    
+                    with open(file_path, 'r') as f:
+                        css_content = f.read()
+                        # Sostituisce i riferimenti a file o URL (immagini, font) con base64
+                        css_content = convert_references_to_base64(css_content, root)
+                        combined_css += css_content + "\n"
+    
     return combined_css
 
-def main():
-    # Raccoglie tutti i file CSS dalla cartella e sottocartelle
-    css_files = collect_css_files(css_folder)
+# Funzione per convertire i riferimenti (immagini, font) a base64 nel contenuto CSS
+def convert_references_to_base64(css_content, css_root):
+    # Cerca gli URL delle immagini o dei font nel CSS
+    import re
+    
+    # Espressione regolare per trovare gli URL
+    url_pattern = re.compile(r'url\((["\']?)([^"\']+)\1\)')
+    
+    # Sostituisce ogni URL con il contenuto in base64
+    def replace_with_base64(match):
+        file_url = match.group(2)
+        file_path = os.path.join(css_root, file_url)
+        
+        if os.path.exists(file_path):
+            base64_content = file_to_base64(file_path)
+            file_extension = os.path.splitext(file_url)[1].lower()
+            
+            if file_extension in ['.png', '.jpg', '.jpeg', '.gif', '.bmp']:
+                mime_type = f'image/{file_extension[1:]}'
+            elif file_extension in ['.woff', '.woff2', '.ttf', '.otf']:
+                mime_type = f'font/{file_extension[1:]}'
+            else:
+                mime_type = 'application/octet-stream'
+            
+            # Aggiungi le virgolette ai dati base64
+            return f'url("data:{mime_type};base64,{base64_content}")'
+        else:
+            return match.group(0)
+    
+    return url_pattern.sub(replace_with_base64, css_content)
 
-    # Processa i file CSS
-    combined_css = process_css_files(css_files)
+# Percorsi delle sottocartelle da elaborare
+css_directories = ['./css/fonts', './css/Material/css', './css/components']
 
-    # Scrive il CSS combinato nel file di output
-    with open(output_file, 'w', encoding='utf-8') as f:
-        f.write(combined_css)
+# Unisce i file CSS e converte i riferimenti in base64
+combined_css = combine_and_convert_css(css_directories)
 
-    print(f"Combinazione completata. Il file {output_file} è stato creato con successo.")
+# Salva il CSS combinato in un nuovo file
+with open('ToneCSS.css', 'w') as output_file:
+    output_file.write(combined_css)
 
-if __name__ == "__main__":
-    main()
+print("Unione dei file CSS completata e salvataggio effettuato in 'combined_styles.css'.")
