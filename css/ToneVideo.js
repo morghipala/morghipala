@@ -14,12 +14,15 @@ const ToneVideo = (() => {
     let creditsCountdown;
     let timerActive = false;
     let hasEnteredCredits = false;
+    let pointerType = null;
+    let target = null;
+    let canShow = true;
 
     const formatTime = (seconds) => {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
         const formattedSeconds = Math.floor(seconds % 60);
-        
+
         if (hours > 0) {
             return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(formattedSeconds).padStart(2, '0')}`;
         } else {
@@ -59,7 +62,7 @@ const ToneVideo = (() => {
         fullscreenButton.innerHTML = '<i class="material-icons">fullscreen</i>';
         fullscreenButton.addEventListener('click', function (e) {
             toggleFullscreen(findNearestVideo(e.target));
-          });
+        });
 
         const skipForwardButton = document.createElement('button');
         skipForwardButton.innerHTML = '<i class="material-icons">forward_10</i>';
@@ -85,9 +88,9 @@ const ToneVideo = (() => {
         controlsWrapper.appendChild(subtitleButton);
         controlsWrapper.appendChild(fullscreenButton);
         controlsContainer.appendChild(controlsWrapper);
-        controlsContainer.appendChild(playButton);
-        controlsContainer.appendChild(skipBackwardButton);
-        controlsContainer.appendChild(skipForwardButton);
+
+        const loader = document.createElement('div');
+        loader.classList.add('loader');
 
         const videoContainer = document.createElement('div');
         videoContainer.classList.add('tone-video-container');
@@ -98,6 +101,10 @@ const ToneVideo = (() => {
         videoParent.removeChild(videoElement);
         videoContainer.appendChild(videoElement);
         videoContainer.appendChild(controlsContainer);
+        videoContainer.appendChild(loader);
+        videoContainer.appendChild(playButton);
+        videoContainer.appendChild(skipBackwardButton);
+        videoContainer.appendChild(skipForwardButton);
 
         videoParent.insertBefore(videoContainer, videoParent.querySelector('.episode-details') || null);
 
@@ -105,15 +112,22 @@ const ToneVideo = (() => {
         const inactivityDelay = 3000;
 
         const resetInactivityTimer = () => {
-            clearTimeout(inactivityTimer);
-            videoContainer.classList.remove('ToneHidden');
-            inactivityTimer = setTimeout(() => {
-                videoContainer.classList.add('ToneHidden');
-            }, inactivityDelay);
+            if (canShow) {
+                clearTimeout(inactivityTimer);
+                videoContainer.classList.remove('ToneHidden');
+                inactivityTimer = setTimeout(() => {
+                    videoContainer.classList.add('ToneHidden');
+                }, inactivityDelay);
+            }
+            canShow = true;
         };
 
         videoContainer.addEventListener('mousemove', resetInactivityTimer);
-        videoContainer.addEventListener('click', resetInactivityTimer);
+        videoContainer.addEventListener('click', function (e) {
+            if (pointerType !== 'touch') {
+                resetInactivityTimer();
+            }
+        });
         videoContainer.addEventListener('mouseleave', () => {
             videoContainer.classList.add('ToneHidden');
         });
@@ -134,7 +148,7 @@ const ToneVideo = (() => {
             const formattedCurrentTime = formatTime(currentTime);
             const formattedDuration = duration ? formatTime(duration) : '00:00';
 
-            
+
             progressBar.max = videoElement.duration;
             progressBar.value = videoElement.currentTime;
 
@@ -159,6 +173,66 @@ const ToneVideo = (() => {
 
         videoElement.addEventListener('play', updateButton);
         videoElement.addEventListener('pause', updateButton);
+        videoElement.addEventListener('click', (e) => {
+            pointerType = e.pointerType;
+            target = e.target;
+        });
+
+        videoElement.addEventListener('dblclick', (e) => {
+            if (pointerType !== "touch") {
+                toggleFullscreen(findNearestVideo(target));
+            } else {
+                let lastTouchTime = 0;
+
+                videoElement.addEventListener('touchstart', (event) => {
+                    const currentTime = Date.now();
+                    const timeDiff = currentTime - lastTouchTime;
+                    lastTouchTime = currentTime;
+
+                    // Controlla se il tempo tra due tocchi è breve (doppio tocco)
+                    if (timeDiff > 0 && timeDiff < 300) {
+                        // Ottieni le dimensioni e la posizione dell'elemento
+                        const rect = videoElement.getBoundingClientRect();
+
+                        // Calcola la posizione del tocco rispetto alla larghezza dell'elemento
+                        const touchX = event.touches[0].clientX - rect.left;
+                        const elementWidth = rect.width;
+
+                        // Calcola i limiti per la zona centrale
+                        const leftLimit = elementWidth / 3;
+                        const rightLimit = (2 * elementWidth) / 3;
+
+                        // Determina la regione del tocco
+                        let region = '';
+                        if (touchX < leftLimit) {
+                            region = 'left';
+                        } else if (touchX >= leftLimit && touchX <= rightLimit) {
+                            region = 'center';
+                        } else {
+                            region = 'right';
+                        }
+
+                        if (region === 'left') {
+                            skipVideo(videoElement, -10);
+                        } else if (region === 'right') {
+                            skipVideo(videoElement, 10);
+                        }
+                        videoContainer.classList.add('ToneHidden');
+                        canShow = false;
+                    }
+                });
+            }
+        });
+
+        videoElement.onwaiting = function() {
+            const loader = findNearestVideo(videoElement).querySelector('.loader');
+            loader.classList.remove('ToneHidden');
+        }
+
+        videoElement.onplaying = function() {
+            const loader = findNearestVideo(videoElement).querySelector('.loader');
+            loader.classList.add('ToneHidden');
+        }
     };
 
     const toggleFullscreen = (videoElement) => {
@@ -578,18 +652,18 @@ const ToneVideo = (() => {
         if (!(element instanceof HTMLElement)) {
             throw new Error("Il parametro deve essere un elemento HTML.");
         }
-    
+
         // Controlla se l'elemento stesso è un <video>
         if (element.tagName.toLowerCase() === ".tone-video-container") {
             return element;
         }
-    
+
         // Cerca l'antenato più vicino con il tag <video>
         const closestVideo = element.closest(".tone-video-container");
         if (closestVideo) {
             return closestVideo;
         }
-    
+
         // Cerca nei fratelli dell'elemento
         let sibling = element.previousElementSibling;
         while (sibling) {
@@ -598,7 +672,7 @@ const ToneVideo = (() => {
             }
             sibling = sibling.previousElementSibling;
         }
-    
+
         sibling = element.nextElementSibling;
         while (sibling) {
             if (sibling.tagName.toLowerCase() === ".tone-video-container") {
@@ -606,17 +680,17 @@ const ToneVideo = (() => {
             }
             sibling = sibling.nextElementSibling;
         }
-    
+
         // Cerca tra i discendenti dell'elemento
         const descendantVideo = element.querySelector(".tone-video-container");
         if (descendantVideo) {
             return descendantVideo;
         }
-    
+
         // Se nessun video è trovato, restituisci null
         return null;
     }
-    
+
 
     const onLoad = () => {
         document.addEventListener("deviceready", onDeviceReady, false);
@@ -635,7 +709,7 @@ const ToneVideo = (() => {
     }
 
 
-    const api = { init, setEpisodeDetails, addButton, removeButton, setOpening, setCredits, setSubtitleLanguage, showSubtitles, hideSubtitles, formatTime, onLoad};
+    const api = { init, setEpisodeDetails, addButton, removeButton, setOpening, setCredits, setSubtitleLanguage, showSubtitles, hideSubtitles, formatTime, onLoad };
     return api;
 
 
