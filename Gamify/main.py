@@ -27,49 +27,59 @@ class FileProcessor(QThread):
 
     def run(self):
         self.progress.emit("Inizio elaborazione...")
-        durations = {}
-        full_track_path = None
-        base_filename = None
+
+        # Crea la directory di output se non esiste
+        if not os.path.exists(self.output_path):
+            os.makedirs(self.output_path)
 
         for filename in os.listdir(self.folder_path):
-            if filename.endswith(".wav"):
-                filepath = os.path.join(self.folder_path, filename)
-                duration = get_duration(filepath)
+            if filename.endswith(".wav") and not filename.startswith('.'):
+                base_name = filename.split(' (')[0]  # Nome del brano base
+                track_files = [f for f in os.listdir(self.folder_path) if f.startswith(base_name)]
 
-                if duration is None:
-                    self.finished.emit(False, f"Errore: Impossibile leggere il file {filename}.")
-                    return
+                durations = {}
+                full_track_path = None
 
-                if "(beginning)" in filename:
-                    durations["beginning"] = round(duration, 3)
-                elif "(loop)" in filename:
-                    durations["loop"] = round(duration, 3)
-                elif "(end)" in filename:
-                    durations["end"] = round(duration, 3)
-                elif filename.endswith(".wav") and "(beginning)" not in filename and "(loop)" not in filename and "(end)" not in filename:
-                    full_track_path = filepath
-                    base_filename = os.path.splitext(filename)[0]
+                for track_file in track_files:
+                    filepath = os.path.join(self.folder_path, track_file)
+                    duration = get_duration(filepath)
 
-        if not durations:
-            self.finished.emit(False, "Nessun file con (beginning), (loop) o (end) trovato.")
-            return
+                    if duration is None:
+                        self.finished.emit(False, f"Errore: Impossibile leggere il file {track_file}.")
+                        return
 
-        if full_track_path is None or base_filename is None:
-            self.finished.emit(False, "Nessun file con il nome completo del brano trovato.")
-            return
+                    if "(beginning)" in track_file:
+                        durations["beginning"] = round(duration, 3)
+                    elif "(loop)" in track_file:
+                        durations["loop"] = round(duration, 3)
+                    elif "(end)" in track_file:
+                        durations["end"] = round(duration, 3)
+                    elif track_file.endswith(".wav") and "(" not in track_file:
+                        full_track_path = filepath
 
-        json_filename = base_filename + ".json"
-        json_filepath = os.path.join(self.output_path, json_filename)
-        with open(json_filepath, "w") as f:
-            json.dump(durations, f, indent=4)
+                if not durations:
+                    self.progress.emit(f"Nessun segmento trovato per {base_name}, ignorato.")
+                    continue
 
-        self.progress.emit("Copia del brano...")
-        try:
-            output_full_track_path = os.path.join(self.output_path, os.path.basename(full_track_path))
-            sf.write(output_full_track_path, *sf.read(full_track_path))
-            self.finished.emit(True, "File JSON e copia del brano creati con successo!")
-        except Exception as e:
-            self.finished.emit(False, f"Errore nella copia: {str(e)}")
+                if not full_track_path:
+                    self.progress.emit(f"Nessun file principale trovato per {base_name}, ignorato.")
+                    continue
+
+                # Salva il file JSON
+                json_filename = base_name + ".json"
+                json_filepath = os.path.join(self.output_path, json_filename)
+                with open(json_filepath, "w") as f:
+                    json.dump(durations, f, indent=4)
+
+                # Copia il file completo
+                self.progress.emit(f"Copia del brano {base_name}...")
+                try:
+                    output_full_track_path = os.path.join(self.output_path, os.path.basename(full_track_path))
+                    sf.write(output_full_track_path, *sf.read(full_track_path))
+                except Exception as e:
+                    self.finished.emit(False, f"Errore nella copia: {str(e)}")
+
+        self.finished.emit(True, "Elaborazione completata con successo!")
 
 
 class App(QWidget):
@@ -80,7 +90,7 @@ class App(QWidget):
         self.select_folder_button = QPushButton("Seleziona Cartella")
         self.select_folder_button.clicked.connect(self.select_folder)
         self.folder_label = QLabel("Nessuna cartella selezionata")
-        self.output_path = "."
+        self.output_path = "./output"
         self.process_button = QPushButton("Processa")
         self.process_button.setEnabled(False)
         self.process_button.clicked.connect(self.start_processing)
@@ -99,11 +109,11 @@ class App(QWidget):
         folder_path = QFileDialog.getExistingDirectory(self, "Seleziona Cartella")
         if folder_path:
             self.folder_label.setText(folder_path)
-            self.selected_folder = folder_path #salvo il path della cartella
+            self.selected_folder = folder_path
             self.process_button.setEnabled(True)
 
     def start_processing(self):
-        if self.selected_folder: #controllo che sia stata selezionata una cartella
+        if self.selected_folder:
             self.status_label.setText("Elaborazione in corso...")
             self.thread = FileProcessor(self.selected_folder, self.output_path)
             self.thread.finished.connect(self.processing_finished)

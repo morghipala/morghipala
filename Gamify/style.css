@@ -9,75 +9,75 @@
 }
 
 #player {
-    display: block;
-    box-sizing: border-box;
-    position: sticky;
-    bottom: 0;
-    transition: 0.4s;
-    -webkit-transition: 0.4s;
-    background-color: rgb(37, 37, 37);
-    overflow: hidden;
-    height: 70px !important;
+  display: block;
+  box-sizing: border-box;
+  position: sticky;
+  bottom: 0;
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  background-color: rgb(37, 37, 37);
+  overflow: hidden;
+  height: 70px !important;
 }
 
 #title {
-    position: absolute;
-    left: 80px;
-    margin: 8px;
-    font-size: large;
-    top: 0;
+  position: absolute;
+  left: 80px;
+  margin: 8px;
+  font-size: large;
+  top: 0;
 }
 
 #game {
-    position: absolute;
-    left: 80px;
-    margin: 8px;
-    font-size: medium;
-    bottom: 0;
+  position: absolute;
+  left: 80px;
+  margin: 8px;
+  font-size: medium;
+  top: 30px;
 }
 
 #player #buttons {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
+  position: absolute;
+  right: 10px;
+  top: -5px;
 }
 
 #playpause {
-    cursor: pointer;
-    width: 46px !important;
-    height: 46px !important;
-    box-sizing: border-box !important;
-    display: inline-block;
-    background-color: #000000;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden;
-    border: none !important;
-    font-family: googleicons !important;
-    border-radius: 9999px !important;
-    transform: translateY(calc(50% - 5px));
-    font-size: xx-large;
-    line-height: 46px;
-    text-align: center;
+  cursor: pointer;
+  width: 46px !important;
+  height: 46px !important;
+  box-sizing: border-box !important;
+  display: inline-block;
+  background-color: #000000;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden;
+  border: none !important;
+  font-family: googleicons !important;
+  border-radius: 9999px !important;
+  transform: translateY(calc(50% - 5px));
+  font-size: xx-large;
+  line-height: 46px;
+  text-align: center;
 }
 
 #download {
-    cursor: pointer;
-    width: 34px !important;
-    height: 34px !important;
-    box-sizing: border-box !important;
-    display: inline-block;
-    background-color: #000000;
-    padding: 0 !important;
-    margin: 0 !important;
-    overflow: hidden;
-    border: none !important;
-    font-family: googleicons !important;
-    border-radius: 9999px !important;
-    transform: translateY(calc(50% - 4px));
-    font-size: larger;
-    line-height: 34px;
-    text-align: center;
+  cursor: pointer;
+  width: 34px !important;
+  height: 34px !important;
+  box-sizing: border-box !important;
+  display: inline-block;
+  background-color: #000000;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden;
+  border: none !important;
+  font-family: googleicons !important;
+  border-radius: 9999px !important;
+  transform: translateY(calc(50% - 4px));
+  font-size: larger;
+  line-height: 34px;
+  text-align: center;
 }
 
 body {
@@ -89,7 +89,7 @@ body {
 }
 
 main {
-    padding: 12px;
+  padding: 12px;
 }
 
 body::-webkit-scrollbar {
@@ -100,6 +100,7 @@ body::-webkit-scrollbar {
   border-radius: 18px;
   background-color: rgb(0, 0, 0);
   padding: 18px;
+  font-size: x-large;
 }
 .category:not(:last-child) {
   margin-bottom: 18px;
@@ -111,6 +112,7 @@ body::-webkit-scrollbar {
   border-radius: 18px;
   background-color: rgb(24, 24, 24);
   padding: 16px;
+  font-size: large;
 }
 .media_container {
   display: block;
@@ -139,6 +141,7 @@ body::-webkit-scrollbar {
   height: 50px !important;
   text-align: center;
   display: block;
+  font-size: medium;
 }
 .media img {
   display: block;
@@ -162,7 +165,7 @@ body::-webkit-scrollbar {
   background-color: rgb(50, 50, 50);
 }
 #player.hidden {
-  display: none;
+  height: 0px !important;
 }
 #buttons button {
   font-family: googleicons !important;

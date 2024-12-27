@@ -3,17 +3,29 @@ window.media_list = {
     nintendo: {
       name: "Nintendo",
       games: {
-        SMO: {
-          name: "Super Mario Odyssey",
-          media: ["Jump Up, Super Star!.wav", "Fossil Falls.wav", "New Donk City.wav", "Bowser's Castle.wav"],
-        },
         MK8D: {
           name: "Mario Kart 8 (& Deluxe)",
-          media: ["Wii Mushroom Gorge.wav", "Title Screen.wav"],
+          media: [
+            "Big Blue.wav",
+            "DS Tick Tock Clock.wav",
+            "Excitebike Arena.wav",
+            "Main Menu.wav",
+            "N64 Yoshi Valley.wav",
+            "SNES Donut Plains 3.wav",
+            "Sunshine Airport.wav",
+            "Title Screen.wav",
+            "Twisted Mansion.wav",
+            "Wii Mushroom Gorge.wav",
+          ],
         },
-        PACMAN: {
-          name: "Pac-Man 99",
-          media: ["Main Theme.wav"],
+        SMO: {
+          name: "Super Mario Odyssey",
+          media: [
+            "Bowser's Castle.wav",
+            "Fossil Falls.wav",
+            "Jump Up, Super Star!.wav",
+            "New Donk City.wav",
+          ],
         },
       },
     },

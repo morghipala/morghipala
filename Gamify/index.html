@@ -30,6 +30,13 @@
         const playPause = document.getElementById("playpause");
         const download = document.getElementById("download");
 
+        
+        if (!localStorage.getItem("loop")) {
+          localStorage.setItem("loop", false);
+        } else {
+          document.getElementById("loop").checked = localStorage.getItem("loop");
+        }
+
         playPause.addEventListener("click", function () {
           if (current_audio.isPlaying()) {
             current_audio.pause();
@@ -131,8 +138,7 @@
           current_audio.loop(false);
         } else {
           current_audio.loop(localStorage.getItem("loop"));
-          document.getElementById("loop").checked =
-            localStorage.getItem("loop");
+          document.getElementById("loop").checked = localStorage.getItem("loop");
         }
         audio[url].src = url;
         current_audio.play();
