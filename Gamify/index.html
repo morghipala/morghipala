@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="https://morghipala.github.io/morghipala/Gamify/mediaList.js" crossorigin type="text/javascript"></script>
-    <link rel="stylesheet" href="ToneCSS.css">
+    <link rel="stylesheet" href="https://morghipala.github.io/morghipala/ToneCSS.css">
     <style>
 
       body {
@@ -30,15 +30,32 @@
       }
       .media_container {
         display: block;
-        overflow-x : scroll;
+        overflow-x : scroll !important;
+        white-space: nowrap;
         overflow-y: hidden;
+        margin: 0;
+        margin-top: 10px;
+      }
+      .media_container {
+        --md-sys-color-primary: rgb(184, 184, 184);
+        color-scheme: dark;
+      }
+      .media:not(:last-child) {
+        margin-right: 10px;
+      }
+      .media span {
+        white-space: normal;
+        padding: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .media {
-        padding: 20px;
-        display: inline-block;
+        height: 200px;
+        width: 160px;
+        display: inline-flex;
         cursor: pointer;
         border-radius: 18px;
-        background-color: var(--md-sys-color-primary-container);
+        background-color: rgb(50, 50, 50);
       }
 
     </style>
@@ -48,7 +65,7 @@
       let audio = {};
       current_audio = null;
       let url_base =
-        "https://raw.githubusercontent.com/morghipala/morghipala/refs/heads/main/Gamify/media/";
+        "https://morghipala.github.io/morghipala/Gamify/media/";
 
       window.onload = function () {
         for (const category in media_list.categories) {
@@ -66,15 +83,14 @@
             mediaList.forEach((media) => {
               const media_div = document.createElement("div");
               media_div.classList.add("media");
-              media_div.innerText = media;
-              media_div.setAttribute(
-                "media_url",
-                url_base + category + "/" + game + "/" + media
-              );
+              const span = document.createElement("span");
+              span.innerText = media;
+              media_div.appendChild(span);
+              media_div.setAttribute("media_url", url_base + category + "/" + game + "/" + media);
               media_div.addEventListener("click", function (event) {
-                playMedia(event.target.getAttribute("media_url"));
+                playMedia(media_div.getAttribute("media_url"));
               });
-              game_div.appendChild(media_div);
+              media_container.appendChild(media_div);
             });
             game_div.appendChild(document.createElement("br"));
             game_div.appendChild(media_container);
@@ -85,13 +101,15 @@
       };
 
       function playMedia(url) {
-        if (current_audio) {
+        if (current_audio !== null) {
           audio[current_audio].pause();
           audio[current_audio].currentTime = 0;
         }
         if (!audio[url]) {
-          audio[url] = new Audio(url);
+          audio[url] = new Audio();
+          audio[url].src = url;
         }
+        console.log(audio[url]);
         audio[url].currentTime = 0;
         current_audio = url;
         audio[url].play();
