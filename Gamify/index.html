@@ -15,6 +15,10 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <style>
+      .minimized #cover {
+        height: 60px;
+        width: 60px;
+      }
       body {
         font-family: sans-serif;
         background-color: rgb(24, 24, 24);
@@ -178,7 +182,7 @@
       }
     </script>
     <div id="player" class="minimized hidden">
-      <img src="" alt="Cover" id="cover" default="" onerror="this.src=this.getAttribute('default')" />
+      <img alt="Cover" id="cover" default="" onerror="this.src=this.getAttribute('default')" />
       <p id="title"></p>
       <p id="game"></p>
       <div id="buttons">
