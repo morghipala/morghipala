@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="mediaList.js"></script>
+    <script src="https://raw.githubusercontent.com/morghipala/morghipala/refs/heads/main/Gamify/mediaList.js" crossorigin></script>
   </head>
   <body>
     <script>
+      let audio = {};
+      current_audio = null;
       let url_base =
         "https://raw.githubusercontent.com/morghipala/morghipala/refs/heads/main/Gamify/media/";
 
@@ -23,7 +25,10 @@
             mediaList.forEach((media) => {
               const media_div = document.createElement("div");
               media_div.innerText = media;
-              media_div.setAttribute("media_url", url_base + category + "/" + game + "/" + media)
+              media_div.setAttribute(
+                "media_url",
+                url_base + category + "/" + game + "/" + media
+              );
               media_div.addEventListener("click", function (event) {
                 playMedia(event.target.getAttribute("media_url"));
               });
@@ -36,8 +41,16 @@
       };
 
       function playMedia(url) {
-        const audio = new Audio(url);
-        audio.play();
+        if (current_audio) {
+          audio[current_audio].pause();
+          audio[current_audio].currentTime = 0;
+        }
+        if (!audio[url]) {
+          audio[url] = new Audio(url);
+        }
+        audio[url].currentTime = 0;
+        current_audio = url;
+        audio[url].play();
       }
     </script>
   </body>
