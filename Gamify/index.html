@@ -4,11 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script
-      src="https://morghipala.github.io/morghipala/Gamify/mediaList.js"
-      crossorigin
-      type="text/javascript"
-    ></script>
+    <script src="https://morghipala.github.io/morghipala/Gamify/mediaList.js"></script>
+    <script src="mediaPlay.js"></script>
     <link
       rel="stylesheet"
       href="https://morghipala.github.io/morghipala/ToneCSS.css"
@@ -65,11 +62,27 @@
         padding: 20px;
         overflow: hidden;
         text-overflow: ellipsis;
+        width: 100%;
+        height: 50px !important;
+        text-align: center;
+        display: block;
+      }
+      .media img {
+        display: block;
+        height: 160px !important;
+        width: 160px !important;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
       }
       .media {
-        height: 200px;
+        height: 240px;
         width: 160px;
+        padding: 0;
         display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 0;
         cursor: pointer;
         border-radius: 18px;
         background-color: rgb(50, 50, 50);
@@ -116,6 +129,22 @@
             mediaList.forEach((media) => {
               const media_div = document.createElement("div");
               media_div.classList.add("media");
+              const img = document.createElement("img");
+              img.setAttribute(
+                "default",
+                url_base + category + "/" + game + ".jpg"
+              );
+              img.setAttribute("onerror", "updateDefaultCover(this)");
+              img.src =
+                url_base +
+                category +
+                "/" +
+                game +
+                +"/" +
+                removeFileExtension(media) +
+                ".jpg";
+              img.alt = removeFileExtension(media);
+              media_div.appendChild(img);
               const span = document.createElement("span");
               span.innerText = removeFileExtension(media);
               media_div.appendChild(span);
@@ -125,7 +154,10 @@
               );
               media_div.setAttribute("media_game", games[game].name);
               media_div.setAttribute("media_title", removeFileExtension(media));
-              media_div.setAttribute("default", url_base + category + "/" + game + ".jpg");
+              media_div.setAttribute(
+                "default",
+                url_base + category + "/" + game + ".jpg"
+              );
               media_div.addEventListener("click", function (event) {
                 playMedia(
                   media_div.getAttribute("media_url"),
@@ -144,32 +176,25 @@
         }
       };
 
-      function playMedia(url, game, title, default_cover) {
-        if (current_audio !== null) {
+      async function playMedia(url, game, title, default_cover) {
+        if (current_audio !== null && current_audio !== audio[url]) {
           current_audio.pause();
           current_audio.currentTime = 0;
         }
-        if (audio[url] !== current_audio) {
-          audio[url] = new Audio();
-          audio[url].src = url;
+        if (!audio[url]) {
+          audio[url] = await new AudioPlayer(url);
+          current_audio = audio[url];
+        } else {
+          current_audio = audio[url];
         }
-        current_audio = audio[url];
-
+        current_audio.loop(true);
         data.cover.setAttribute("default", default_cover);
-
-        if (data.cover.src !== removeFileExtension(url) + ".jpg") {
-          data.cover.src = removeFileExtension(url) + ".jpg";
-        }
-
-        if (data.title.innerText !== title) {
-          data.title.innerText = title;
-        }
-
+        data.cover.src = removeFileExtension(url) + ".jpg";
+        data.title.innerText = title;
         data.gameTitle.innerText = game;
         data.player.classList.remove("hidden");
-
-        if (current_audio.paused) {
-          current_audio.currentTime = 0;
+        audio[url].src = url;
+        if (!current_audio.isPlaying()) {
           current_audio.play();
         }
       }
@@ -185,16 +210,99 @@
           img.src = img.getAttribute("default");
         }
       }
+
+      if ("mediaSession" in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: "Unforgettable",
+    artist: "Nat King Cole",
+    album: "The Ultimate Collection (Remastered)",
+    artwork: [
+      {
+        src: "https://dummyimage.com/96x96",
+        sizes: "96x96",
+        type: "image/png",
+      },
+      {
+        src: "https://dummyimage.com/128x128",
+        sizes: "128x128",
+        type: "image/png",
+      },
+      {
+        src: "https://dummyimage.com/192x192",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        src: "https://dummyimage.com/256x256",
+        sizes: "256x256",
+        type: "image/png",
+      },
+      {
+        src: "https://dummyimage.com/384x384",
+        sizes: "384x384",
+        type: "image/png",
+      },
+      {
+        src: "https://dummyimage.com/512x512",
+        sizes: "512x512",
+        type: "image/png",
+      },
+    ],
+  });
+
+  navigator.mediaSession.setActionHandler("play", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("pause", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("stop", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("seekbackward", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("seekforward", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("seekto", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("previoustrack", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("nexttrack", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("skipad", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("togglecamera", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("togglemicrophone", () => {
+    /* Code excerpted. */
+  });
+  navigator.mediaSession.setActionHandler("hangup", () => {
+    /* Code excerpted. */
+  });
+}
+
     </script>
     <div id="player" class="minimized hidden">
-      <img alt="Cover" id="cover" default="" onerror="updateDefaultCover(this)" />
+      <img
+        alt="Cover"
+        id="cover"
+        default=""
+        onerror="updateDefaultCover(this)"
+      />
       <p id="title"></p>
       <p id="game"></p>
       <div id="buttons">
         <button
           rounded
           id="playpause"
-          onclick="current_audio.paused ? current_audio.play() : current_audio.pause();"
+          onclick="!current_audio.isPlaying() ? current_audio.play() : current_audio.pause();"
         >
           u
         </button>
