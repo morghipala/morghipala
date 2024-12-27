@@ -4,6 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://morghipala.github.io/morghipala/Gamify/mediaList.js" crossorigin type="text/javascript"></script>
+    <link rel="stylesheet" href="ToneCSS.css">
+    <style>
+
+      body {
+        font-family: sans-serif;
+        background-color: rgb(24, 24, 24);
+        color: white;
+      }
+      .category {
+        margin-bottom: 1em;
+        font-weight: bold;
+        border-radius: 18px;
+        background-color: rgb(0, 0, 0);
+        padding: 16px;
+      }
+      .game {
+        display: block;
+        margin-top: 0.5em;
+        font-style: italic;
+        border-radius: 18px;
+        background-color: rgb(24, 24, 24);
+        padding: 16px;
+      }
+      .media_container {
+        display: block;
+        overflow-x : scroll;
+        overflow-y: hidden;
+      }
+      .media {
+        padding: 20px;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 18px;
+        background-color: var(--md-sys-color-primary-container);
+      }
+
+    </style>
   </head>
   <body>
     <script>
@@ -15,14 +53,19 @@
       window.onload = function () {
         for (const category in media_list.categories) {
           let category_div = document.createElement("div");
+          category_div.classList.add("category");
           category_div.innerText = media_list.categories[category].name;
           const games = media_list.categories[category].games;
           for (const game in games) {
             let game_div = document.createElement("div");
+            game_div.classList.add("game");
             game_div.innerText = games[game].name;
+            let media_container = document.createElement("div");
+            media_container.classList.add("media_container");
             const mediaList = media_list.categories[category].games[game].media;
             mediaList.forEach((media) => {
               const media_div = document.createElement("div");
+              media_div.classList.add("media");
               media_div.innerText = media;
               media_div.setAttribute(
                 "media_url",
@@ -33,6 +76,8 @@
               });
               game_div.appendChild(media_div);
             });
+            game_div.appendChild(document.createElement("br"));
+            game_div.appendChild(media_container);
             category_div.appendChild(game_div);
           }
           document.body.appendChild(category_div);
