@@ -1,11 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <audio src="https://raw.githubusercontent.com/morghipala/morghipala/refs/heads/main/Gamify/media/Nintendo/SMO/Jump Up, Super Star!.wav" controls crossorigin></audio>
-</body>
+    <script src="mediaList.js"></script>
+  </head>
+  <body>
+    <script>
+      let url_base =
+        "https://raw.githubusercontent.com/morghipala/morghipala/refs/heads/main/Gamify/media/";
+
+      window.onload = function () {
+        for (const category in media_list.categories) {
+          let category_div = document.createElement("div");
+          category_div.innerText = media_list.categories[category].name;
+          const games = media_list.categories[category].games;
+          for (const game in games) {
+            let game_div = document.createElement("div");
+            game_div.innerText = games[game].name;
+            const mediaList = media_list.categories[category].games[game].media;
+            mediaList.forEach((media) => {
+              const media_div = document.createElement("div");
+              media_div.innerText = media;
+              media_div.setAttribute("media_url", url_base + category + "/" + game + "/" + media)
+              media_div.addEventListener("click", function (event) {
+                playMedia(event.target.getAttribute("media_url"));
+              });
+              game_div.appendChild(media_div);
+            });
+            category_div.appendChild(game_div);
+          }
+          document.body.appendChild(category_div);
+        }
+      };
+
+      function playMedia(url) {
+        const audio = new Audio(url);
+        audio.play();
+      }
+    </script>
+  </body>
 </html>
