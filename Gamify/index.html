@@ -4,14 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="https://morghipala.github.io/morghipala/Gamify/mediaList.js" crossorigin type="text/javascript"></script>
-    <link rel="stylesheet" href="https://morghipala.github.io/morghipala/ToneCSS.css">
+    <script
+      src="https://morghipala.github.io/morghipala/Gamify/mediaList.js"
+      crossorigin
+      type="text/javascript"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://morghipala.github.io/morghipala/ToneCSS.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
     <style>
-
       body {
         font-family: sans-serif;
         background-color: rgb(24, 24, 24);
         color: white;
+      }
+      body::-webkit-scrollbar {
+        display: none;
       }
       .category {
         margin-bottom: 1em;
@@ -30,7 +40,7 @@
       }
       .media_container {
         display: block;
-        overflow-x : scroll !important;
+        overflow-x: scroll !important;
         white-space: nowrap;
         overflow-y: hidden;
         margin: 0;
@@ -39,6 +49,9 @@
       .media_container {
         --md-sys-color-primary: rgb(184, 184, 184);
         color-scheme: dark;
+      }
+      .media_container::-webkit-scrollbar {
+        display: unset;
       }
       .media:not(:last-child) {
         margin-right: 10px;
@@ -57,17 +70,33 @@
         border-radius: 18px;
         background-color: rgb(50, 50, 50);
       }
-
+      #player.hidden {
+        display: none;
+      }
+      #buttons button {
+        font-family: googleicons !important;
+      }
     </style>
   </head>
   <body>
     <script>
       let audio = {};
       current_audio = null;
-      let url_base =
-        "https://morghipala.github.io/morghipala/Gamify/media/";
+      let url_base = "https://morghipala.github.io/morghipala/Gamify/media/";
+
+      window.data = {
+        cover: null,
+        player: null,
+        title: null,
+        gameTitle: null,
+      };
 
       window.onload = function () {
+        data.cover = document.getElementById("cover");
+        data.player = document.getElementById("player");
+        data.title = document.getElementById("title");
+        data.gameTitle = document.getElementById("game");
+
         for (const category in media_list.categories) {
           let category_div = document.createElement("div");
           category_div.classList.add("category");
@@ -84,11 +113,22 @@
               const media_div = document.createElement("div");
               media_div.classList.add("media");
               const span = document.createElement("span");
-              span.innerText = media;
+              span.innerText = removeFileExtension(media);
               media_div.appendChild(span);
-              media_div.setAttribute("media_url", url_base + category + "/" + game + "/" + media);
+              media_div.setAttribute(
+                "media_url",
+                url_base + category + "/" + game + "/" + media
+              );
+              media_div.setAttribute("media_game", games[game].name);
+              media_div.setAttribute("media_title", removeFileExtension(media));
+              media_div.setAttribute("default", url_base + category + "/" + game + ".jpg");
               media_div.addEventListener("click", function (event) {
-                playMedia(media_div.getAttribute("media_url"));
+                playMedia(
+                  media_div.getAttribute("media_url"),
+                  media_div.getAttribute("media_game"),
+                  media_div.getAttribute("media_title"),
+                  media_div.getAttribute("default")
+                );
               });
               media_container.appendChild(media_div);
             });
@@ -100,20 +140,56 @@
         }
       };
 
-      function playMedia(url) {
+      function playMedia(url, game, title, default_cover) {
         if (current_audio !== null) {
-          audio[current_audio].pause();
-          audio[current_audio].currentTime = 0;
+          current_audio.pause();
+          current_audio.currentTime = 0;
         }
-        if (!audio[url]) {
+        if (audio[url] !== current_audio) {
           audio[url] = new Audio();
           audio[url].src = url;
         }
-        console.log(audio[url]);
-        audio[url].currentTime = 0;
-        current_audio = url;
-        audio[url].play();
+        current_audio = audio[url];
+
+        data.cover.setAttribute("default", default_cover);
+
+        if (data.cover.src !== removeFileExtension(url) + ".jpg") {
+          data.cover.src = removeFileExtension(url) + ".jpg";
+        }
+
+        if (data.title.innerText !== title) {
+          data.title.innerText = title;
+        }
+
+        data.gameTitle.innerText = game;
+        data.player.classList.remove("hidden");
+
+        if (current_audio.paused) {
+          current_audio.currentTime = 0;
+          current_audio.play();
+        }
+      }
+      function removeFileExtension(filename) {
+        const lastDotIndex = filename.lastIndexOf(".");
+        if (lastDotIndex === -1) {
+          return filename;
+        }
+        return filename.substring(0, lastDotIndex);
       }
     </script>
+    <div id="player" class="minimized hidden">
+      <img src="" alt="Cover" id="cover" default="" onerror="this.src=this.getAttribute('default')" />
+      <p id="title"></p>
+      <p id="game"></p>
+      <div id="buttons">
+        <button
+          rounded
+          id="playpause"
+          onclick="current_audio.paused ? current_audio.play() : current_audio.pause();"
+        >
+          u
+        </button>
+      </div>
+    </div>
   </body>
 </html>

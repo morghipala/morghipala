@@ -11,6 +11,10 @@ window.media_list = {
           name: "Mario Kart 8 Deluxe",
           media: ["Wii Mushroom Gorge.wav"],
         },
+        PACMAN: {
+          name: "Pac-Man 99",
+          media: ["Main Theme.wav"],
+        },
       },
     },
   },
