@@ -180,9 +180,14 @@
         }
         return filename.substring(0, lastDotIndex);
       }
+      function updateDefaultCover(img) {
+        if (img.src !== img.getAttribute("default")) {
+          img.src = img.getAttribute("default");
+        }
+      }
     </script>
     <div id="player" class="minimized hidden">
-      <img alt="Cover" id="cover" default="" onerror="this.src=this.getAttribute('default')" />
+      <img alt="Cover" id="cover" default="" onerror="updateDefaultCover(this)" />
       <p id="title"></p>
       <p id="game"></p>
       <div id="buttons">

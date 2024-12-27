@@ -8,8 +8,8 @@ window.media_list = {
           media: ["Jump Up, Super Star!.wav", "Fossil Falls.wav"],
         },
         MK8D: {
-          name: "Mario Kart 8 Deluxe",
-          media: ["Wii Mushroom Gorge.wav"],
+          name: "Mario Kart 8 (& Deluxe)",
+          media: ["Wii Mushroom Gorge.wav", "Title Screen.wav"],
         },
         PACMAN: {
           name: "Pac-Man 99",
