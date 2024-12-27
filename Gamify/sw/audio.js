@@ -151,7 +151,7 @@ onload = async () => {
   /* Utils */
 
   function getAwesomePlaylist() {
-    const BASE_URL = 'https://storage.googleapis.com/media-session/';
+    const BASE_URL = 'https://storage.googleapis.com/media-session/sintel/snow-fight.mp3';
 
     return [
       {

@@ -1,1 +1,79 @@
-<script src="audio.js"></script>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riproduzione WAV con MediaState</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #state {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Riproduci il file WAV</h1>
+    <audio id="audioPlayer" src="https://www2.cs.uic.edu/~i101/SoundFiles/PinkPanther60.wav" preload="auto"></audio>
+    
+    <button id="playButton">Riproduci</button>
+    <button id="pauseButton">Pausa</button>
+    <button id="stopButton">Ferma</button>
+
+    <div id="state">Stato: Non riprodotto</div>
+
+    <script>
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playButton = document.getElementById('playButton');
+        const pauseButton = document.getElementById('pauseButton');
+        const stopButton = document.getElementById('stopButton');
+        const stateDisplay = document.getElementById('state');
+
+        let mediaState = 'Non riprodotto'; // Stato iniziale
+
+        function updateState() {
+            stateDisplay.textContent = 'Stato: ' + mediaState;
+        }
+
+        playButton.addEventListener('click', () => {
+            audioPlayer.play();
+            mediaState = 'In riproduzione';
+            updateState();
+        });
+
+        pauseButton.addEventListener('click', () => {
+            audioPlayer.pause();
+            mediaState = 'In pausa';
+            updateState();
+        });
+
+        stopButton.addEventListener('click', () => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // Resetta il tempo di riproduzione
+            mediaState = 'Fermato';
+            updateState();
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            mediaState = 'Completato';
+            updateState();
+        });
+
+        // Aggiorna lo stato iniziale
+        updateState();
+    </script>
+</body>
+</html>

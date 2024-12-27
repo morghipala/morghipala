@@ -74,8 +74,6 @@ class AudioPlayer {
                 if (this.onEndCallback) this.onEndCallback();
             }
         };
-        
-        navigator.mediaSession.playbackState = "playing";
     }
 
     pause() {
@@ -85,8 +83,6 @@ class AudioPlayer {
         this.stop();
         this.pausedAt = elapsed;
         this._isPaused = true;
-
-        navigator.mediaSession.playbackState = "paused";
     }
 
     stop() {
@@ -97,18 +93,11 @@ class AudioPlayer {
         this.source = null;
         this._isPlaying = false;
         this.pausedAt = 0;
-
-        navigator.mediaSession.playbackState = "none";
     }
 
     loop(enabled) {
         this._loopEnabled = enabled;
-        if (this._isPlaying) {
-            const currentTime = this.getCurrentTime();
-            this.stop();
-            this.pausedAt = currentTime;
-            this.play();
-        }
+        localStorage.setItem("loop", enabled)
     }
 
     getCurrentTime() {

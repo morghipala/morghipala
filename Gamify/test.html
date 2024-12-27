@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Player with Web Audio API</title>
+</head>
+<body>
+
+  <h1>Audio Player</h1>
+  <button id="playButton">Play</button>
+
+  <script>
+    let audioContext;
+    let audioElement;
+    let audioSourceNode;
+    let playlist = ['./snow-fight.mp3']; // Lista dei brani (solo uno, come richiesto)
+    let index = 0;
+
+    // Funzione per inizializzare l'AudioContext e l'AudioElement
+    function initAudio() {
+      // Crea un nuovo AudioContext (richiesto da Web Audio API)
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+      // Crea un elemento audio HTML5
+      audioElement = new Audio();
+      audioElement.src = playlist[index];
+
+      // Quando il brano è pronto, lo colleghiamo all'AudioContext
+      audioElement.addEventListener('canplaythrough', function() {
+        audioSourceNode = audioContext.createMediaElementSource(audioElement);
+        audioSourceNode.connect(audioContext.destination);
+      });
+    }
+
+    // Funzione per avviare la riproduzione
+    function playAudio() {
+      // Se l'AudioContext non è stato creato, crealo e inizializza il player
+      if (!audioContext) {
+        initAudio();
+      }
+
+      // Quando l'utente interagisce con il sito, avvia l'AudioContext
+      if (audioContext.state === 'suspended') {
+        audioContext.resume().then(() => {
+          console.log('AudioContext resumed');
+          audioElement.play();
+        });
+      } else {
+        audioElement.play();
+      }
+
+      // Quando l'audio inizia a suonare, aggiorniamo i metadati
+      audioElement.onplay = function() {
+        console.log('Playing ' + playlist[index]);
+        updateMetadata();
+      };
+    }
+
+    // Funzione per aggiornare i metadati
+    function updateMetadata() {
+      console.log('Track metadata updated');
+      // Qui possiamo impostare i metadati come titolo, artista, ecc. (se desiderato)
+    }
+
+    // Gestione del click sul pulsante "Play"
+    document.getElementById('playButton').addEventListener('click', function() {
+      playAudio();
+    });
+  </script>
+
+</body>
+</html>

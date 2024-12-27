@@ -11,89 +11,7 @@
       href="https://morghipala.github.io/morghipala/ToneCSS.css"
     />
     <link rel="stylesheet" href="styles.css" />
-    <style>
-      .minimized #cover {
-        height: 60px;
-        width: 60px;
-      }
-      body {
-        font-family: sans-serif;
-        background-color: rgb(24, 24, 24);
-        color: white;
-      }
-      body::-webkit-scrollbar {
-        display: none;
-      }
-      .category {
-        margin-bottom: 1em;
-        font-weight: bold;
-        border-radius: 18px;
-        background-color: rgb(0, 0, 0);
-        padding: 16px;
-      }
-      .game {
-        display: block;
-        margin-top: 0.5em;
-        font-style: italic;
-        border-radius: 18px;
-        background-color: rgb(24, 24, 24);
-        padding: 16px;
-      }
-      .media_container {
-        display: block;
-        overflow-x: scroll !important;
-        white-space: nowrap;
-        overflow-y: hidden;
-        margin: 0;
-        margin-top: 10px;
-      }
-      .media_container {
-        --md-sys-color-primary: rgb(184, 184, 184);
-        color-scheme: dark;
-      }
-      .media_container::-webkit-scrollbar {
-        display: unset;
-      }
-      .media:not(:last-child) {
-        margin-right: 10px;
-      }
-      .media span {
-        white-space: normal;
-        padding: 20px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 100%;
-        height: 50px !important;
-        text-align: center;
-        display: block;
-      }
-      .media img {
-        display: block;
-        height: 160px !important;
-        width: 160px !important;
-        aspect-ratio: 1 / 1;
-        object-fit: cover;
-      }
-      .media {
-        height: 240px;
-        width: 160px;
-        padding: 0;
-        display: inline-flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex-grow: 0;
-        cursor: pointer;
-        border-radius: 18px;
-        background-color: rgb(50, 50, 50);
-      }
-      #player.hidden {
-        display: none;
-      }
-      #buttons button {
-        font-family: googleicons !important;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <script>
@@ -109,6 +27,22 @@
       };
 
       window.onload = function () {
+        const playPause = document.getElementById("playpause");
+        const download = document.getElementById("download");
+
+        playPause.addEventListener("click", function () {
+          if (current_audio.isPlaying()) {
+            current_audio.pause();
+          } else {
+            current_audio.play();
+          }
+        });
+
+        download.addEventListener("click", function () {
+          downloadFile(removeFileExtension(current_audio.src) + ".brstm");
+
+        });
+
         data.cover = document.getElementById("cover");
         data.player = document.getElementById("player");
         data.title = document.getElementById("title");
@@ -172,11 +106,17 @@
             game_div.appendChild(media_container);
             category_div.appendChild(game_div);
           }
-          document.body.appendChild(category_div);
+          document.getElementsByTagName("main")[0].appendChild(category_div);
         }
       };
 
       async function playMedia(url, game, title, default_cover) {
+        //current_audio.loop(false);
+        data.cover.setAttribute("default", default_cover);
+        data.cover.src = removeFileExtension(url) + ".jpg";
+        data.title.innerText = title;
+        data.gameTitle.innerText = game;
+        data.player.classList.remove("hidden");
         if (current_audio !== null && current_audio !== audio[url]) {
           current_audio.pause();
           current_audio.currentTime = 0;
@@ -187,16 +127,17 @@
         } else {
           current_audio = audio[url];
         }
-        current_audio.loop(true);
-        data.cover.setAttribute("default", default_cover);
-        data.cover.src = removeFileExtension(url) + ".jpg";
-        data.title.innerText = title;
-        data.gameTitle.innerText = game;
-        data.player.classList.remove("hidden");
-        audio[url].src = url;
-        if (!current_audio.isPlaying()) {
-          current_audio.play();
+        if (!localStorage.getItem("loop")) {
+          current_audio.loop(false);
+        } else {
+          current_audio.loop(localStorage.getItem("loop"));
+          document.getElementById("loop").checked =
+            localStorage.getItem("loop");
         }
+        audio[url].src = url;
+        current_audio.play();
+        //if (!current_audio.isPlaying()) {
+        //}
       }
       function removeFileExtension(filename) {
         const lastDotIndex = filename.lastIndexOf(".");
@@ -211,85 +152,41 @@
         }
       }
 
-      if ("mediaSession" in navigator) {
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: "Unforgettable",
-    artist: "Nat King Cole",
-    album: "The Ultimate Collection (Remastered)",
-    artwork: [
-      {
-        src: "https://dummyimage.com/96x96",
-        sizes: "96x96",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/128x128",
-        sizes: "128x128",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/192x192",
-        sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/256x256",
-        sizes: "256x256",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/384x384",
-        sizes: "384x384",
-        type: "image/png",
-      },
-      {
-        src: "https://dummyimage.com/512x512",
-        sizes: "512x512",
-        type: "image/png",
-      },
-    ],
-  });
+      updateButtons();
+      function updateButtons() {
+        requestAnimationFrame(updateButtons);
+        const playPause = document.getElementById("playpause");
+        const loop = document.getElementById("loop");
 
-  navigator.mediaSession.setActionHandler("play", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("pause", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("stop", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("seekbackward", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("seekforward", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("seekto", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("previoustrack", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("nexttrack", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("skipad", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("togglecamera", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("togglemicrophone", () => {
-    /* Code excerpted. */
-  });
-  navigator.mediaSession.setActionHandler("hangup", () => {
-    /* Code excerpted. */
-  });
+        if (current_audio && current_audio.isPlaying()) {
+          playPause.innerText = "x";
+        } else {
+          playPause.innerText = "u";
+        }
+      }
+
+      function downloadFile(url) {
+  // Estrae il nome del file dal URL (dopo l'ultimo / o \)
+  const filename = url.substring(url.lastIndexOf('/') + 1).replace(/\\/g, '/');
+
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => {
+      // Crea un URL per il blob
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename; // Imposta il nome del file estratto
+      // Simula il click sul link per avviare il download
+      link.click();
+      // Rilascia l'oggetto URL creato
+      URL.revokeObjectURL(link.href);
+    })
+    .catch(error => console.error('Errore durante il download del file:', error));
 }
 
     </script>
-    <div id="player" class="minimized hidden">
+    <main></main>
+    <div id="player" class="hidden" style="user-select: none">
       <img
         alt="Cover"
         id="cover"
@@ -299,13 +196,16 @@
       <p id="title"></p>
       <p id="game"></p>
       <div id="buttons">
-        <button
-          rounded
-          id="playpause"
-          onclick="!current_audio.isPlaying() ? current_audio.play() : current_audio.pause();"
-        >
-          u
-        </button>
+        <div id="download">f</div>
+        <label class="switch">
+          <input
+            type="checkbox"
+            oninput="current_audio.loop(this.checked);"
+            id="loop"
+          />
+          <span class="slider round"></span>
+        </label>
+        <div id="playpause">u</div>
       </div>
     </div>
   </body>
