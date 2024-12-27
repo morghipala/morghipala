@@ -76,14 +76,7 @@
                 url_base + category + "/" + game + ".jpg"
               );
               img.setAttribute("onerror", "updateDefaultCover(this)");
-              img.src =
-                url_base +
-                category +
-                "/" +
-                game +
-                +"/" +
-                removeFileExtension(media) +
-                ".jpg";
+              img.src = `${url_base}${category}/${game}/${removeFileExtension(media)}.jpg`
               img.alt = removeFileExtension(media);
               media_div.appendChild(img);
               const span = document.createElement("span");
